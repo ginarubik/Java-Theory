@@ -28,19 +28,41 @@ int remainder = x % y; // remainder = 1
     // x változó értékének negyede (x = x / 4)
     // x változó értékének maradékának meghatározása (x = x % 2)
 
-    //++
-    //--
+    //++ (inkrementálás – növelés) Az értéket 1-gyel növeli.
 
-    //Hogyan tudunk a felhasználótól bekérni adatot?
-    //Hozzunk létre egy scannert ami bekéri a user nevet es ezt nyomtassuk is ki.
+int x = 5;
+x++;   // x = x + 1
 
+x értéke: 6
 
-    //Lehetőségünk van Stringek összefűzésére / konkatenáció
+//-- (dekrementálás – csökkentés)
 
-    //TypeCasting:
-    //byte -> short -> char -> int -> long -> float -> double  (automatically)
-    //double -> float -> long -> int -> char -> short -> byte (manually)
+Az értéket 1-gyel csökkenti.
 
+Példa:
+int y = 5;
+y--;   // y = y - 1
+
+y értéke: 4
+
+Előtag és utótag különbség
+
+Nagyon fontos különbség van aközött, hogy előtte vagy utána áll az operátor.
+
+Utótag (i++, i--)
+
+Először felhasználja az értéket, utána módosítja.
+
+int i = 5;
+System.out.println(i++); // kiírja: 5
+System.out.println(i);   // most már: 6
+
+Előtag (++i, --i)
+
+Először módosítja az értéket, utána használja.
+
+int i = 5;
+System.out.println(++i); // növel, majd kiírja: 6
     
 III.String
 
@@ -52,8 +74,13 @@ Ha ugyanezt stringként csináljuk akkor összefűzi:
 
 System.out.println("2"+"5") // 25 lesz kiírva
 
+//Lehetőségünk van Stringek összefűzésére / konkatenáció
+
+    //TypeCasting:
+    //byte -> short -> char -> int -> long -> float -> double  (automatically)
+    //double -> float -> long -> int -> char -> short -> byte (manually)
+
+    
 
 
-jól tagolt
 
-pontosan azt csinálja, amit kell
