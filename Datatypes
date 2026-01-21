@@ -71,3 +71,41 @@ bonyolult, hosszú metódusok
 
 A jó kód önmagát magyarázza.
 
+// Egysoros komment
+
+/*
+ Többsoros komment
+ több sorban
+ */
+
+/**
+ * Dokumentációs komment
+ * (JavaDoc)
+ */
+Ne azt kommenteld, mit csinál a kód, hanem azt, miért.
+
+psvm → main
+
+Ez egy IDE gyorsbillentyű (pl. IntelliJ IDEA, Eclipse):
+
+psvm + TAB
+
+automatikusan létrehozza a main metódust
+
+„Hello World” – clean code szerint
+public class HelloWorld {
+
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+
+Miért clean?
+
+beszédes osztálynév
+
+nincs felesleges komment
+
+jól tagolt
+
+pontosan azt csinálja, amit kell
