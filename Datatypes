@@ -3,7 +3,9 @@ I. Primitív típusok
 //Primitívek: 8 fajta típust különböztetünk meg: boolean, byte, char, short, int, long, float, double
     //Értékhatárok: érdemes ránézni az IDE warningjaira
 
-II. Operátorok: Műveletek egyszerű számokkal
+II. Operátorok
+
+Műveletek egyszerű számokkal
 
 Java-ban a primitív szám típusok (byte, short, int, long, float, double) mindegyikével
 elvégezhetőek az alapmatematikai műveletek, mint pl. az összeadás, kivonás, szorzás,
@@ -19,6 +21,13 @@ int remainder = x % y; // remainder = 1
     
 III.String
 
+A string egy olyan típus amiben szöveges adatokat tudunk tárolni. Stringbe lehet
+számokat is írni, de ezeket szövegként fogja értelmezni. Ha például int-ként adok
+össze két számot akkor ezeket összeadja:
+System.out.println(2+5) // 7 lesz kiírva
+Ha ugyanezt stringként csináljuk akkor összefűzi: 
+
+System.out.println("2"+"5") // 25 lesz kiírva
 
 IV. kódolási konvenciók, clean code
 
