@@ -1,0 +1,80 @@
+IV. kódolási konvenciók, clean code
+
+     */
+    //psvm -> main
+
+Ezek szabályok és ajánlások, hogy a kód:
+
+könnyen olvasható
+
+egységes
+
+mások számára is érthető legyen
+
+Alapvető Java konvenciók
+
+Osztály neve: nagybetűvel kezdődik → HelloWorld
+
+Metódus neve: kisbetűvel kezdődik → main
+
+Behúzás: 4 szóköz
+
+Kapcsos zárójelek: logikusan tagolva
+Beszédes nevek, ne x, a1, temp (ha nem indokolt)
+
+Clean Code (tiszta kód)elvei:
+
+egyszerű
+
+érthető
+
+felesleges dolgoktól mentes
+
+Mit kerülj?
+
+túl sok komment (inkább jó név legyen)
+
+értelmetlen változónevek
+
+bonyolult, hosszú metódusok
+
+A jó kód önmagát magyarázza.
+
+// Egysoros komment
+
+/*
+ Többsoros komment
+ több sorban
+ */
+
+/**
+ * Dokumentációs komment
+ * (JavaDoc)
+ */
+Ne azt kommenteld, mit csinál a kód, hanem azt, miért.
+
+psvm → main
+
+Ez egy IDE gyorsbillentyű (pl. IntelliJ IDEA, Eclipse):
+
+psvm + TAB
+
+automatikusan létrehozza a main metódust
+
+„Hello World” – clean code szerint
+public class HelloWorld {
+
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+
+Miért clean?
+
+beszédes osztálynév
+
+nincs felesleges komment
+
+jól tagolt
+
+pontosan azt csinálja, amit kell
