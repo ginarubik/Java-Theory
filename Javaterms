@@ -1,0 +1,47 @@
+I.  IDEA használat
+    
+1.konzol in-out
+
+System.out.print(1);
+System.out.println(2);
+    
+2.bytecode és JVM
+
+A bytecode a Java program lefordított, köztes formája.
+
+Amikor egy .java fájlt lefordítasz a javac fordítóval, nem közvetlenül gépi kód készül, hanem egy .class fájl, ami bytecode-ot tartalmaz.
+
+Ez a bytecode platformfüggetlen, vagyis ugyanaz a .class fájl futtatható Windowson, Linuxon, macOS-en stb.
+
+Java forráskód → bytecode → futtatás
+
+A JVM egy virtuális gép, amely értelmezi és futtatja a bytecode-ot.
+
+Minden operációs rendszerhez más JVM implementáció létezik, de mind ugyanazt a bytecode-ot képesek futtatni.
+
+A JVM feladatai többek között:
+
+bytecode futtatása (interpretálás vagy JIT fordítás)
+
+memória kezelése (heap, stack)
+
+garbage collection (szemétgyűjtés)
+
+biztonság és hibaellenőrzés
+
+Hogyan kapcsolódnak össze?
+
+Megírod a Java kódot (.java)
+
+A fordító bytecode-dá alakítja (.class)
+
+A JVM betölti és futtatja a bytecode-ot
+
+„Write once, run anywhere” – mert a bytecode minden JVM-en fut.
+
+    
+3.konzolos parancsok (javac, java)
+
+A "javac filename.java" parancsal generáljunk le egy .class kiterjesztésű fájlt. Utána a
+"java filename" -el el tudjuk indítani ezt a kis alkalmazást a CMD-ből.Intellij-ben: Run/Run "" vagy jobb gomb és run
+
