@@ -3,7 +3,18 @@ I. Primitív típusok
 //Primitívek: 8 fajta típust különböztetünk meg: boolean, byte, char, short, int, long, float, double
     //Értékhatárok: érdemes ránézni az IDE warningjaira
 
-II. Operátorok
+II. Operátorok: Műveletek egyszerű számokkal
+
+Java-ban a primitív szám típusok (byte, short, int, long, float, double) mindegyikével
+elvégezhetőek az alapmatematikai műveletek, mint pl. az összeadás, kivonás, szorzás,
+osztás és maradék meghatározása.
+int x = 5;
+int y = 2;
+int sum = x + y; // sum = 7
+int diff = x - y; // diff = 3
+int product = x * y; // product = 10
+int quotient = x / y; // quotient = 2
+int remainder = x % y; // remainder = 1
 
     
 III.String
