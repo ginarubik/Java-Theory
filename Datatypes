@@ -3,9 +3,9 @@ I. Primitív típusok
 //Primitívek: 8 fajta típust különböztetünk meg: boolean, byte, char, short, int, long, float, double
     //Értékhatárok: érdemes ránézni az IDE warningjaira
 
-II. Operátorok
+II. Operátorok //Nézzünk meg egy-két dolgot mit tudunk velük csinálni.
 
-Műveletek egyszerű számokkal
+//Alapműveletek: Műveletek egyszerű számokkal
 
 Java-ban a primitív szám típusok (byte, short, int, long, float, double) mindegyikével
 elvégezhetőek az alapmatematikai műveletek, mint pl. az összeadás, kivonás, szorzás,
@@ -18,6 +18,29 @@ int product = x * y; // product = 10
 int quotient = x / y; // quotient = 2
 int remainder = x % y; // remainder = 1
 
+
+//Összehasonlítás
+
+    //Változók új értékekkel
+    // változó értékének növelése 5-tel (x = x + 5)
+    // x változó értékének csökkentése 3-mal (x = x - 3)
+    // x változó értékének megduplázása (x = x * 2)
+    // x változó értékének negyede (x = x / 4)
+    // x változó értékének maradékának meghatározása (x = x % 2)
+
+    //++
+    //--
+
+    //Hogyan tudunk a felhasználótól bekérni adatot?
+    //Hozzunk létre egy scannert ami bekéri a user nevet es ezt nyomtassuk is ki.
+
+
+    //Lehetőségünk van Stringek összefűzésére / konkatenáció
+
+    //TypeCasting:
+    //byte -> short -> char -> int -> long -> float -> double  (automatically)
+    //double -> float -> long -> int -> char -> short -> byte (manually)
+
     
 III.String
 
@@ -29,82 +52,7 @@ Ha ugyanezt stringként csináljuk akkor összefűzi:
 
 System.out.println("2"+"5") // 25 lesz kiírva
 
-IV. kódolási konvenciók, clean code
 
-     */
-    //psvm -> main
-
-Ezek szabályok és ajánlások, hogy a kód:
-
-könnyen olvasható
-
-egységes
-
-mások számára is érthető legyen
-
-Alapvető Java konvenciók
-
-Osztály neve: nagybetűvel kezdődik → HelloWorld
-
-Metódus neve: kisbetűvel kezdődik → main
-
-Behúzás: 4 szóköz
-
-Kapcsos zárójelek: logikusan tagolva
-Beszédes nevek, ne x, a1, temp (ha nem indokolt)
-
-Clean Code (tiszta kód)elvei:
-
-egyszerű
-
-érthető
-
-felesleges dolgoktól mentes
-
-Mit kerülj?
-
-túl sok komment (inkább jó név legyen)
-
-értelmetlen változónevek
-
-bonyolult, hosszú metódusok
-
-A jó kód önmagát magyarázza.
-
-// Egysoros komment
-
-/*
- Többsoros komment
- több sorban
- */
-
-/**
- * Dokumentációs komment
- * (JavaDoc)
- */
-Ne azt kommenteld, mit csinál a kód, hanem azt, miért.
-
-psvm → main
-
-Ez egy IDE gyorsbillentyű (pl. IntelliJ IDEA, Eclipse):
-
-psvm + TAB
-
-automatikusan létrehozza a main metódust
-
-„Hello World” – clean code szerint
-public class HelloWorld {
-
-    public static void main(String[] args) {
-        System.out.println("Hello World");
-    }
-}
-
-Miért clean?
-
-beszédes osztálynév
-
-nincs felesleges komment
 
 jól tagolt
 
