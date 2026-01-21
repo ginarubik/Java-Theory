@@ -21,7 +21,34 @@ int remainder = x % y; // remainder = 1
 
 //Összehasonlítás
 
-    //Változók új értékekkel
+Az összehasonlítás Java-ban azt jelenti, hogy két értéket hasonlítunk össze, és az eredmény mindig egy logikai érték:
+true vagy false
+
+Összehasonlító operátorok
+Operátor	Jelentés	Példa	Eredmény
+==	egyenlő	5 == 5	true
+!=	nem egyenlő	5 != 3	true
+>	nagyobb	5 > 3	true
+<	kisebb	5 < 3	false
+>=	nagyobb vagy egyenlő	5 >= 5	true
+<=	kisebb vagy egyenlő	4 <= 3	false
+
+int a = 10;
+int b = 20;
+
+System.out.println(a > b);   // false
+System.out.println(a < b);   // true
+System.out.println(a == b);  // false
+System.out.println(a != b);  // true
+
+= → értékadás
+
+== → összehasonlítás
+
+if (a == 5) { }
+
+
+III. //Változók új értékekkel
     // változó értékének növelése 5-tel (x = x + 5)
     // x változó értékének csökkentése 3-mal (x = x - 3)
     // x változó értékének megduplázása (x = x * 2)
@@ -71,9 +98,7 @@ i++	használ → növel
 i--	használ → csökkent
 --i	csökkent → használ
 
-Clean code tipp:
-
-Ha nem szükséges az előtag/utótag különbség, akkor:
+Clean code tipp: ha nem szükséges az előtag/utótag különbség
 
 i += 1;   // vagy
 i -= 1;
