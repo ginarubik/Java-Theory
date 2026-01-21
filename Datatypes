@@ -1,0 +1,11 @@
+I. primitív típusok
+
+//Primitívek: 8 fajta típust különböztetünk meg: boolean, byte, char, short, int, long, float, double
+    //Értékhatárok: érdemes ránézni az IDE warningjaira
+
+    operátorok
+    String
+    kódolási konvenciók, clean code
+
+     */
+    //psvm -> main
