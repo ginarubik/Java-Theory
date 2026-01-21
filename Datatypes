@@ -63,6 +63,20 @@ Először módosítja az értéket, utána használja.
 
 int i = 5;
 System.out.println(++i); // növel, majd kiírja: 6
+
+Összefoglaló táblázat
+Kifejezés	Mit csinál?
+i++	használ → növel
+++i	növel → használ
+i--	használ → csökkent
+--i	csökkent → használ
+
+Clean code tipp:
+
+Ha nem szükséges az előtag/utótag különbség, akkor:
+
+i += 1;   // vagy
+i -= 1;
     
 III.String
 
