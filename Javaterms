@@ -4,6 +4,9 @@ I.  IDEA használat
 
 System.out.print(1);
 System.out.println(2);
+
+konzolra kiiratás:
+System.out.println(x); //x értékét írja ki
     
 2.bytecode és JVM
 
