@@ -1,0 +1,15 @@
+Tipikus komplexitások
+
+O(1): konstans (pl. tömb i-edik eleme)
+
+O(log n): felezéses keresés (rendezett adaton)
+
+O(n): egyszer végigmész (lineáris keresés)
+
+O(n log n): jó rendezések (pl. merge sort jelleg)
+
+O(n²): két egymásba ágyazott ciklus (buborék rendezés alapötlet)
+
+O(2^n): brutál kombinálás (pl. összes részhalmaz)
+
+O(n!): permutációk (nagyon gyorsan kezelhetetlen)
