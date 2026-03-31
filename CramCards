@@ -1,0 +1,2 @@
+Mi az immutable osztály? Miután egy objektum létrejön egy immutábilis (változtathatatlan) osztályból, a tartalmát már nem lehet módosítani.
+A Java-ban minden wrapper osztály (például String, Boolean, Byte, Short) és a String osztály immutábilis.
