@@ -1,2 +1,42 @@
-Mi az immutable osztály? Miután egy objektum létrejön egy immutábilis (változtathatatlan) osztályból, a tartalmát már nem lehet módosítani.
+1.Mi az immutable osztály? Miután egy objektum létrejön egy immutábilis (változtathatatlan) osztályból, a tartalmát már nem lehet módosítani.
 A Java-ban minden wrapper osztály (például String, Boolean, Byte, Short) és a String osztály immutábilis.
+2. Mi a reflection? Ez egy Java-funkció, amely lehetővé teszi, hogy egy futó Java-program megvizsgálja önmagát, és manipulálja a program belső tulajdonságait.
+Például egy Java osztály lekérdezheti az összes tagjának nevét, és meg is jelenítheti azokat.
+3.Mi a thread? A végrehajtás egysége egy folyamaton belül (a JVM-en belül) – egy folyamatnak lehet egy vagy több szála (threadje).
+Minden szálnak saját vereme (stackje) van. De a folyamat összes szála közösen használja a heap memóriát.
+Néha könnyűsúlyú folyamatoknak (lightweight processes) is nevezik őket, mert saját stackkel rendelkeznek, de hozzáférnek a megosztott adatokhoz.
+Előny: a szálak közötti kommunikáció működési költsége alacsony.
+Hátrány: ha egy szállal probléma történik egy folyamaton belül, az biztosan hatással lesz a többi szálra és magára a folyamat működőképességére is.
+4. Milyen módokon lehet megvalósítani a többszálúságot (multithreadinget) Java-ban? A Runnable vagy a Callable interfész implementálása (ajánlott módszer)
+A **Thread osztály kiterjesztése (öröklése).
+5.Mi a deadlock? A multithreading egyik problémája, amely akkor fordulhat elő, amikor egy szál egy objektum zárolására (lock) vár, amelyet egy másik szál már megszerzett, miközben a második szál egy olyan zárolásra vár, amelyet az első szál birtokol.
+Mivel mindkét szál a másikra vár, hogy felszabadítsa a zárolást, ezt az állapotot deadlocknak (holtpontnak) nevezzük.
+6.Mi a különbség az ArrayList és a LinkedList között? ArrayList: Belsőleg dinamikus tömböt (dynamic array) használ az elemek tárolására.
+Az adatmanipuláció lassabb, mert tömböt használ (ha egy elemet eltávolítunk, a többi elem eltolódik a memóriában).
+Csak listaként működik, mert csak a List interfészt implementálja. Adatok tárolására és elérésére hatékonyabb.
+LinkedList: Belsőleg kétirányú láncolt listát (doubly linked list) használ az elemek tárolására.Az adatmanipuláció gyorsabb, mint az ArrayList esetében, 
+mert nem szükséges memóriaeltolás. A LinkedList osztály listaként és várólistaként (queue) is működhet, mert implementálja a List és Deque interfészeket.
+Adatok módosítására (beszúrás, törlés) hatékonyabb.
+7. Mi a különbség a HashSet és a TreeSet között? A HashSet gyorsabb az olyan műveletekben, mint az add, remove, contains, size stb.
+A HashSet nem tart fenn semmilyen sorrendet az elemek között, míg a TreeSet elemei alapértelmezés szerint növekvő sorrendbe vannak rendezve.
+Ugyanez igaz a HashMap és TreeMap esetében is.
+8.Mi a különbség a HashSet és a HashMap között? A HashSet a Set interfészt, míg a HashMap a Map interfészt implementálja.
+A HashSet csak értékeket tárol, míg a HashMap kulcs–érték párokat (key–value párokat) tárol. A HashSet elemei egyediek, míg a HashMap esetében a kulcsok egyediek.
+A HashSet egyetlen null értéket tartalmazhat, míg a HashMap egy null kulcsot és tetszőleges számú null értéket tartalmazhat.
+A HashSet belsőleg egy HashMap-et használ az objektumok hozzáadására és tárolására.
+9.Mi a különbség a Collection és a Collections között? A legtöbb kollekciós osztály alap interfésze. Olyan metódusokat definiál, amelyek közösek az objektumokat 
+tároló adatszerkezetekben. A List, Set és Queue a Collection alinterfészei, míg az ArrayList és a HashSet konkrét implementációk.
+Collections: Egy segéd (utility) osztály, amely a Java Collections Framework része.
+Statikus metódusokat tartalmaz olyan osztályok objektumain végrehajtható műveletekhez, amelyek a Collection interfészt implementálják.
+Például a Collections tartalmaz metódust egy kollekció legnagyobb elemének meghatározására.
+10. Mi a hashCode() metódus? Egy objektumból egy egész számot (integer) generál.
+A hashcode lehetővé teszi az objektumok gyors tárolását és lekérését HashMap-ben vagy Hashtable-ben. Szabályok:Ha egy objektumon többször meghívjuk a hashCode() 
+metódust egy Java alkalmazás futása alatt, mindig ugyanazt az egész számot kell visszaadnia.
+Ha két objektum egyenlő (equals() szerint), akkor a hashcode-jaiknak is egyenlőnek kell lenniük
+11. Miért kell felülírni az equals() és a hashcode() metódusokat? Minden Java objektum hozzáfér az equals() metódushoz (az Object osztályból örökölve).
+Az alapértelmezett implementáció csak az objektumok memóriacímeit hasonlítja össze. Ha az objektumokat más tulajdonságaik alapján szeretnéd összehasonlítani, 
+felül kell írnod az equals() metódust.
+12. Mi a Javaban a generics? Mi az előnye? Olyan nyelvi funkció, amely lehetővé teszi generikus típusok és metódusok definiálását és használatát.
+Elsősorban a kollekciók implementálására és használatára találták ki. Előnyök: Egy generikus osztály implementációja többféle típusra is példányosítható →
+kevesebb kód írása szükséges.Korai hibadetektálás fordítási időben → a fordító több típusellenőrzést végezhet, és kevesebb dinamikus típuskonverzióra van szükség.
+Ha felülírod az equals()-t, akkor a hashCode()-t is felül kell írnod, különben sérül az Object.hashCode általános szerződése.
