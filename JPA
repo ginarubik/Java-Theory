@@ -1,0 +1,4 @@
+JPA (Java Persistence API), now officially known as Jakarta Persistence, is a Java specification that simplifies object-relational mapping (ORM) 
+by allowing developers to map Java classes (entities) to database tables using annotations rather than writing complex SQL. 
+It acts as a standardized framework that defines what persistence operations must exist, while leaving the implementation details to providers like 
+Hibernate or EclipseLink. 
