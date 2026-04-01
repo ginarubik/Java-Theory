@@ -14,3 +14,20 @@ preferred in enterprise applications for its ability to abstract relational
 data management within an object-oriented paradigm.
 pom.xml is the Project Object Model (POM) file, the central configuration file for a Maven project, written in XML and located at the project's root directory. 
 It serves as a one-stop-shop for all project information and build configuration. 
+Core Elements
+The minimal required elements in a pom.xml are:
+<groupId>: A unique identifier for the project's group (e.g., com.example). 
+<artifactId>: The name of the project itself (e.g., my-app). 
+<version>: The project's version number (e.g., 1.0-SNAPSHOT). 
+<modelVersion>: Must be set to 4.0.0, the current POM version. 
+Together, groupId, artifactId, and version form the project's Maven coordinates, which uniquely identify it in a repository. 
+Key Configuration Sections
+<dependencies>: Declares the project's external libraries (artifacts) and their own coordinates. A <scope> (e.g., compile, test, provided) defines 
+when a dependency is available. 
+<properties>: Defines reusable variables (e.g., <java.version>17</java.version>) for consistent configuration.
+<build>: Configures the build process, including:
+<plugins>: Specifies Maven plugins (e.g., maven-compiler-plugin) and their goals.
+<resources>: Defines source and test resource directories. 
+<parent>: Allows a project to inherit configuration from a parent POM, promoting consistency across related projects. 
+Maven reads the pom.xml to execute its build lifecycle, manage dependencies, and run plugins, making it a declarative configuration that defines 
+what needs to be done, not how to do it. 
