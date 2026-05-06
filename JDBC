@@ -1,0 +1,564 @@
+# JDBC and JPA
+
+## Objectives
+ - JDBC
+ - Introduction to JPA / ORM
+ - Transactions
+ - Entity relationships
+
+## Main Content 
+
+### MAVEN
+
+Maven is  software that can manage dependencies for java applications and automate build processes. So it's both a package manager and a build automation tool.
+We are going to use it for dependency management now, in other words to help us to get the external libraries that we need for our project.
+IntelliJ IDEA supports a fully-functional integration with Maven, that's why we don't need to install it separately.
+
+- Where can I configure Maven?
+  - In the ***pom.xml***.
+
+#### Hands-on: Check pom.xml
+
+- Check the pom.xml file in ***00-jdbc-intro*** module.
+  - xml: markup language for general purpose
+  - properties tag: You can specify here which Java version to use (if you don't, the default is Java 5. Trust me, you don't want it.)
+  - dependency tag: To get the required libraries from https://mvnrepository.com
+  - try to find the **mySql-connector** in this webpage, this library helps us to connect our application to a MySQL database
+    
+    
+- Why is it good for us?
+  - You  don't have to put these libraries one-by-one to your project
+  - If more than one person is working on the same project, the others also get these dependencies, if you add the ***pom.xml*** to git
+  - You don't have to zip and send these libraries to send to the others, because Maven downloads to their PC from net.
+  - Maven downloads libraries to **Users/yourusername/.m2**
+  
+Optional: watch this video
+[Maven tutorial](https://youtu.be/Fe6lrsPmseo)
+
+### JDBC
+
+#### Workshops: JDBC introduction
+
+- What are the main purposes of JDBC?
+  - Java Database Connectivity
+  - It is a unified Java API (interfaces) to handle data of relational databases
+  - We can store and retrieve persistent data
+
+#### Training: JDBC
+
+- http://tutorials.jenkov.com/jdbc/index.html (first 8 sections, until Load JDBC Driver)
+
+> ### &#128161; Note: Some tips for working with JDBC
+> 
+> JDBC objects, such as Connection, Statement, PreparedStatement and
+> ResultSet are resources that must be closed after they become unnecessary.
+> A "wider-scoped" object closes the other resources that were created with
+> it. For example, closing a Connection closes Statements and closing
+> a Statement closes the returned ResultSet. It is suggested that you
+> keep the Connection open until the end of the program but you should
+> wrap Statements and PreparedStatement into a try-with-resources block.
+> There is no need to close ResultSets because short after they are
+> processed, the (Prepared)Statement will also be closed.
+> For more information, read: https://blogs.oracle.com/weblogicserver/using-try-with-resources-with-jdbc-objects
+>
+> For queries that do not have parameters to substitute, you can just use
+> Statement. For queries that do have parameter substitutions, you should use
+> PreparedStatements and set parameters with setString(), setInt() etc.
+> It is much more safe. Adding parameters with normal String operations
+> may result in code vulnerable to SQL injection attacks. Also, this might prove more efficient and faster to run.
+>
+> Some old tutorials state that you must load the JDBC driver with
+> Class.forName() first. Since Java 6 this step is not necessary anymore. However you may find, that it still happens in the background if you go inside the Drivers constructor method.
+> 
+>You can log how the queries look like after parameter substitutions if you
+> call toString() on the PreparedStatement object.
+> 
+>It is recommended to encapsulate database manipulation logic into a single
+> class. In this way, your code will be easy to read and you can easily
+> replace the database technology as well.  
+> 
+> Sometimes, an interface is also introduced, this is called the DAO pattern: http://best-practice-software-engineering.ifs.tuwien.ac.at/patterns/dao.html
+
+#### Workshop: JDBC-Intro
+
+Work in the ***00-jdbc-intro*** module. Go through the files and classes with the mentor.
+
+#### Hands-on: JDBC - Orc Manager
+
+Work in the ***01-jdbc-orcmanager*** module.
+
+Check the implementation of each method
+- Create tables
+- Find by ID
+- Save Orc
+
+#### Exercise: JDBC - Orc Manager
+
+Work in the ***01-jdbc-orcmanager*** module.  
+
+You will be implementing database operations in the OrcManager class. As you are adding new features, make sure that the changes are reflected in the database.
+
+##### Exercise 1
+
+- Save a list of orcs to DB  
+  An orc should contain:
+    - an ID, 
+    - a fist name, 
+    - a last name, 
+    - a horde name 
+    - and the number of kills.
+
+Try to find out which preparedStatement methods to use to execute a whole list.
+
+##### Exercise 2
+
+- Implement the method that deletes an orc with the given id.
+  Return true, if the orc has existed and the delete was successful.
+  Return false every other time.
+
+
+##### Exercise 3
+
+- Update on orc in the database
+  - Take the id of orcToUpdate, check if it exists in the database, and if it does, update its attributes
+  to the values from the parameter
+  - throw a custom OrcNotExists runtime exception in every other case
+
+##### Exercise 4
+
+- Create dummy orcs in database
+  - save as many orcs as the method arguments asks (int amount)
+  - use the OrcGenerator class to create random orcs
+
+##### Optional
+
+- Create a WeaponManager class with a createTable method.
+  - Weapon table should have the following fields:
+    - id
+    - name
+    -  orc_id (foreign key)
+  - Implement similar methods to the OrcManager (save, find, update, delete)!
+  - Check what happens, if you try to connect a weapon to a non-existing orc!
+    
+
+1__________________________________________________________________________________2
+
+### JPA-ORM
+
+#### Hands-on: Understanding ORM code
+
+Work in the ***02-jdbc-bookstore*** module.  
+
+Use ***02-jdbc-bookstore*** Maven project/module from the forked repository.
+Examine the source code and try it out on your machine!
+
+Let us collect what are the required steps to save a new book!
+
+#### Workshop: JPA mapping
+
+How could we simplify the above process? What repeating steps do you notice? The mentor will explain how ORM and JPA works before you see the training videos.
+
+Compare ***03-jpa-bookstore*** to the JDBC version. It achieves the same functionalities but in a much simpler way!
+
+Talk about the following topics:
+  - ORM, JPA, Hibernate and their relations
+  - JPA annotations
+  - persistance.xml
+
+#### Training: Understanding Object-Relational Mapping (ORM)
+
+- Understanding object/relational persistence
+  - [(2) Object Persistence](https://youtu.be/oVc8TUBOmpU) - 2:20
+  - [(3) Relational Database](https://youtu.be/UTQV-Y_HHYI) - 5:13
+  - [(4) Object Model and Relational Model ](https://youtu.be/NWUN3xy5Y1g) - 1:27  
+  - [(6) Object Relational Mapping ](https://youtu.be/AlaLuBfz-xI) - 13:14
+
+  Optional:
+  
+  - [(5) Object Relational Impedance Mismatch ](https://www.udemy.com/hibernate-and-jpa-fundamentals/learn/v4/t/lecture/1326698) - 7:42
+
+#### Training: Hibernate/JPA
+
+- Getting started with JPA
+  - [(11) What is Hibernate?](https://youtu.be/N9DyDnf0AN4) - 1:12
+  - [(12) JPA Annotations](https://youtu.be/7kZbKLf23Ho) - 1:56
+  - (39) What is JPA? - https://youtu.be/QwooUc3XxRk - 1:57
+  - (40) Hibernate as JPA Provider - https://youtu.be/fPnTb3A9GjQ - 1:58
+  
+  Optional:
+  
+  - (17) Manipulating Objects - https://www.udemy.com/hibernate-and-jpa-fundamentals/learn/v4/t/lecture/1327376 - 6:01
+
+
+
+#### Hands-on: JPA configuration and transaction handling
+
+Work in the ***04-jpa-webshop*** module.  
+
+Let's make a webshop application! We have a base code but still missing a lot of things. Let
+
+1. The persistence.xml file is provided in the main/resources/META-INF folder
+   for your convenience. Let us review what is in this file!
+
+2. We need to annotate the Product class in order to save its instances with JPA.
+   Note the @GeneratedValue annotation that is used to generate IDs automatically.
+   If we save an instance with its ID set to null, the JPA provider will generate a unique value.
+
+3. In the Webshop class, we initialize JPA. First, we create an EntityManagerFactory and with the help of that,
+   we instantiate an EntityManager.  We will invoke database operations on this object.
+   Don't forget to close the EntityManager after the database operation!
+   
+    ```java
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    
+    // your JPA code comes here...
+    
+    entityManager.close();
+    ```
+   
+    > ### &#128161; EntityManager object is NOT thread-safe! 
+    Always create a new one and don't reuse it after closing it. 
+    Read about thread safety: https://stackoverflow.com/questions/261683/what-is-meant-by-thread-safe-code
+
+
+4. JPA *write* (create, update, delete) operations must run in a transaction.
+   For this, we also need an EntityTransaction object.  You will learn
+   more about transactions later, for now, just remember to wrap your code
+   inside a transaction if you use a write operation:
+
+    ```java
+    EntityTransaction transaction = entityManager.getTransaction();
+    transaction.begin();
+
+    // your JPA code comes here...
+
+    transaction.commit();
+    ```
+
+5. Now we have everything to implement our first two operations.
+   For saveProduct(), we need to start a transactions since it is going to be
+   a write operation.  Then we use em.persist() to save this new instance
+   to the database and finally, we commit the transaction.
+
+6. Now let us connect this code to the text user interface and try it out!
+
+7. Ok, we also have to list all the Products. We are using a new thing called JPQL here, 
+   which is almost like SQL but for objects (we can use our entities in the place of the tables). 
+
+#### Exercise: JPA basics
+
+Continue working in the ***04-jpa-webshop*** module.  
+
+- Implement saving customers as well.  Remember using transactions.
+- Implement updating product and customer data. For this, you will have to call em.merge().
+  This method will know which entity instance to update by checking its ID. 
+  It also means that you cannot update the ID, of course.  
+- Implement removing products and customers as well.
+
+#### Hands-on: Setting the datasource for IDEA
+
+Add the database connection to the IDEA as a datasource, then alt+enter on the table or column name and set the
+datasource to your persistance unit. This will help the IDEA to check wether you have correct column names.
+
+### JPQL
+
+Continue working in the ***04-jpa-webshop*** module. 
+
+#### Training - Working with objects
+
+- (42) Working with Objects - https://youtu.be/O3Tgq6l3lMI - 5:32
+
+#### Training: JPQL
+
+The Java Persistence Query Language (JPQL) is the query language defined by JPA.
+JPQL is similar to SQL, but operates on objects, attributes and relationships
+instead of tables and columns.  Read through the following reference to
+have an idea of what you can do with JPQL.  You will need JPQL for listing
+all instances of a specific entity.  Do not try to learn or memorize everything,
+just get an idea of what JPQL is capable of so that you know where to look for
+the information when needed.
+
+https://en.wikibooks.org/wiki/Java_Persistence/JPQL
+
+2__________________________________________________________________________________3
+
+### One-to-Many Mapping
+#### Training: One-to-many mapping
+
+Read the following article:
+https://www.geeksforgeeks.org/jpa-one-to-many-mapping/?ref=ml_lbp
+
+#### Hands-on: One-to-many mapping
+
+Continue working on the **webshop-jpa** project.
+
+We are going to support placing orders.  An order belongs to exactly one
+customer but a customer can have several orders placed.  So there is a
+one-to-many relationship between *Customer and Order*.  At the moment, we
+only store the order date and a comment String in the orders, the ordered
+items will be added later.
+
+- Add the new class and map it to the database.  Beware that ORDER is an
+  SQL keyword, so it probably will not work if you try to call your table
+  Order.  But you can place a @Table annotation to the entity and override
+  the default naming strategy, to e.g. Purchase.
+- Since it is a many-to-one relationship, you practically store the
+  references at the many side, in the Order class. Use mappedBy at the
+  inverse side.
+- Implement placing orders from the user interface (hint: you only have to ask for the id of the customer as input)
+
+#### Exercise: One-to-many mapping
+
+Create a new Address entity (zipcode, city, street name, house number), and connect it to the Customer entity.
+Each customer can have more addresses, but an address belongs to only one Customer.
+
+Implement the following functionalities on the user interface:
+- saving a new address
+- updating an address
+- deleting addresses
+- listing all address of a customer
+
+3__________________________________________________________________________________4
+
+### Transactions
+
+#### Training: Transactions
+
+An overview of what a transaction is, and why we use it:
+https://vladmihalcea.com/2014/01/05/a-beginners-guide-to-acid-and-database-transactions/
+
+#### Workshop: Transaction rollback
+
+Continue working in the ***04-jpa-webshop*** module. 
+
+For consistency problems, transactions are your friends. Imagine if you would have a product inventory
+too, start saving the order and in the middle of the process you would realise that one of the items are out of stock.
+You would have to remove the order from the database and put all the items already in it back to the inventory. To do
+this manually would be a tedious task.  
+Or you ask for the id of the customer as an input, but you get an invalid id, and only realize this when you query for 
+the customer from the database.
+Fortunately we already have a tool in databases that can help with this (and many other things as well): transactions!
+
+Let's see how we can handle rolling back transaction in the case of an SQLException:
+- start a try-catch block after beginning the transaction
+- if the try branch executes without problem, commit the transaction
+- if an exception is thrown, log it to the console (e.printStacktrace()) and 
+roll back the transaction (transaction.rollback())
+- and if something else happens (like not finding a customer with the id you got as parameter) you can also roll back
+the transaction
+
+### Many-To-Many mapping
+
+Read the following article: https://www.geeksforgeeks.org/jpa-many-to-many-mapping/?ref=ml_lbp
+
+#### Workshop: Many-to-Many mapping
+
+Talk about the following topics:
+- many-to-many relationships in real life
+- how can we model them in a relational database
+- why aren't we using many-to-many usually in JPA
+
+#### Exercise: How to turn Many-to-Many to One-to-Many mappings
+
+We already have our Order entity from yesterday, now let's put some actual items in them.
+But wait! Every order can have more than one products and every product can appear in multiple orders.
+Oh no! That would be a many-to-many relationship!  
+In the database this relationship is implemented by a *join table*, so let's make an entity that will represent this.
+
+Create an OrderItem entity, that will connect to both the Order and the Product entity with many-to-one relationships.  
+
+Change the user-interface implementation of saving and updating orders to save the actual products in the order too.
+
+#### Training: More JPA annotations
+
+So far, you have only seen one-to-many and many-to-one relationships between
+entities. What if you just want to store a collection of Strings or primitive
+values, such as a set of Strings or a list of Integers for an entity? That
+resembles a one-to-many relationship but JPA handles it in a slightly
+different way.
+
+Read how you can store collections of Strings and primitives with JPA:
+https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0/
+
+Read how you can map enums to databases:
+http://tomee.apache.org/examples-trunk/jpa-enumerated/README.html
+
+#### Exercise: Tags and categories
+
+- Support tags for your products.  The user can enter an arbitrary number of tags
+  separated by comma.  Store them in a List<String> and use the proper JPA
+  annotation!
+- Support product categories: BOOKS, CLOTHING and ELECTRONICS. Save the category as an
+  enum and use the proper JPA annotation to map it to the database!
+  
+4__________________________________________________________________________________5
+
+### Fetch Strategies, Cascading and more
+
+#### Training: Fetch strategy and entity states
+
+Check what happens if you try to list the orders for each customer when you list
+the customers. You will get an exception... The orders are not loaded by default
+because that is a costly operation.  JPA tries to save this to be more efficient
+and you must explicitly tell it to load the orders if you need them later.
+Read the following article on eager and lazy fetching:
+https://thoughts-on-java.org/entity-mappings-introduction-jpa-fetch
+
+The fetch strategy is closely related to entity states. The entity instance is
+only being synchronized with the database while the transaction lasts. When you
+close the transaction, the connection is lost. If you try to access connecting
+entities inside the transaction, Hibernate will load them but once the entity is
+detached, you get the exception as seen earlier. Read about entity states here:
+https://vladmihalcea.com/a-beginners-guide-to-jpa-hibernate-entity-state-transitions/
+
+#### Exercise: Explicit eager fetch
+
+Make the fetching of orders in the Customer class eager and list the orders of
+customers as well in the customer list.
+
+#### Training: Cascading and OrphanRemoval
+
+Go through with the debugger how each cascading option works
+
+### Testing
+
+#### Note: Testing JPA code
+
+You may have asked yourself the question: how can I test JPA code easily?
+If you use the same configuration for testing, the database will be
+required for testing.  Furthermore, you will always need to restore a clean
+state of the database after tests.  For example, if you add a product and
+assert that there is only one product in the database, it will work first but
+after running the test again, you will have two products in the database.
+Because of this, usually a different approach is used for testing.
+
+The easiest way to test your JPA code is to use an in-memory database
+for testing.  It will be started along with your test and every time it
+is going to be empty.  You do not have to bother with cleanup.  The most
+common in-memory database that is used is HSQL.
+
+#### Exercise: Test your JPA code
+
+1. Add JUnit the H2 (or HSQL) database as dependencies with test scope:
+
+    ```html
+    <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+    </dependency>
+    <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>test</scope>
+    </dependency>
+    ```
+
+2. Create another META-INF/persistence.xml under test/resources:
+
+    ```html
+    <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+    
+    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1">
+    
+        <persistence-unit name="webshop-test" transaction-type="RESOURCE_LOCAL">
+            <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+            <class>com.progmasters.jpa.webshop.domain.Product</class>
+            <class>com.progmasters.jpa.webshop.domain.Customer</class>
+            <class>com.progmasters.jpa.webshop.domain.Order</class>
+    
+            <properties>
+                <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:test" />
+                <property name="javax.persistence.jdbc.user" value="sa" />
+                <property name="javax.persistence.jdbc.password" value="" />
+                <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+                <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+                <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            </properties>
+        </persistence-unit>
+    </persistence>
+    ```
+
+3. Add a package-level constructor to Webshop that takes an EntityManager
+   factory.  You are going to use this to inject your customized EntityManager
+   for testing.
+
+4. Create a test class and an init method that uses the HSQL configuration
+   and the new constructor.
+
+    ```java
+    @BeforeEach
+    public void init() {
+        webshop = new Webshop(entityManagerFactory);
+    }
+    ```
+
+5. Write your test methods as usual. Test a couple of features.
+
+### Exercise: Further Practice Tasks (Optional)
+
+- Test saving a customer
+- Test a successful order
+- Test a failing order with items missing from stock
+- Implement listing products that have a given tag
+- Implement deleting products from a given category
+- Implement increasing the price with a given percentage of products in a given category
+- Implement listing orders from the last 5 days
+
+## Material Review
+
+  - JDBC terminology:
+    - connection
+    - query
+    - statement
+    - preparedStatement
+      - mentioned protection from SQL injection attack
+      - quicker
+- a hint on ORM
+- JPA configuration
+- DAO pattern
+- Bean Validation (validation constraints with annotations)
+- ORM (impedance mismatch)
+- Hibernate
+- Hibernate vs JDBC
+- JPA
+- Transactions overview (ACID, isolation levels)
+- Testing DAO layer
+- Unit test vs integration test
+- JPA entity states
+- JPA associations
+  - many-to-many ( with relations database/with objects )
+  - one-to-one
+  - one-to-many
+  - cascades
+  - fetching strategies, fetch types
+- JPA schema auto create, update, create-drop
+
+## See also
+
+- [Java Persistence API Official Specification:](http://download.oracle.com/otn-pub/jcp/persistence-2_2-mrel-spec/JavaPersistence.pdf)
+- [Hibernate: hbm2ddl.auto=update in production?](https://stackoverflow.com/questions/221379/hibernate-hbm2ddl-auto-update-in-production)
+- [hibernate-hbm2ddl-auto options](https://stackoverflow.com/a/38814972)
+- [Why use persist() over merge()?](https://stackoverflow.com/questions/1069992/jpa-entitymanager-why-use-persist-over-merge)
+- [Baeldung persist/save/merge/update etc.]( https://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate )
+- [JPA 101 - JPA Concepts]( http://tomee.apache.org/jpa-concepts.html )
+- [@GeneratedValue options](https://www.objectdb.com/java/jpa/entity/generated ) 
+- [What is an API](https://www.infoworld.com/article/3269878/apis/what-is-an-api-application-programming-interfaces-explained.html )
+- [Vlad Mihalcea tutorials]( https://vladmihalcea.com/tutorials/hibernate/ )
+- [How does a PreparedStatement avoid or prevent SQL injection?](https://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or-prevent-sql-injection)
+
+- [Example file (statement) explained](https://www.tutorialspoint.com/jdbc/preparestatement-object-example.htm)
+- [Example file (prepared statement) explained](https://www.tutorialspoint.com/jdbc/preparestatement-object-example.htm)
+- [Database transactions](https://en.wikipedia.org/wiki/Database_transaction)
+- [Isolation levels](https://en.wikipedia.org/wiki/Isolation_(database_systems))
+- [Hibernate Session methods](http://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate)
+- [Hibernate documentation](http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html)
+- http://docs.spring.io/spring/docs/current/spring-framework-reference/html/transaction.html
+- http://www.objectdb.com/api/java/jpa
+- [Hibernate entity states](https://vladmihalcea.com/2014/07/30/a-beginners-guide-to-jpahibernate-entity-state-transitions/)
+- [Bean Validation reference](http://beanvalidation.org/1.1/spec/)
+- [Hibernate Validator](http://hibernate.org/validator/)
+- [Hibernate fetch strategies](https://vladmihalcea.com/2013/10/17/hibernate-facts-the-importance-of-fetch-strategy/)
