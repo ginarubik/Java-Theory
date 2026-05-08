@@ -1,0 +1,3377 @@
+I.OOP
+1. Mik a java adattípusok?
+A Java adattípusai két nagy csoportra oszthatók:
+Primitív adattípusok
+Ezek beépített, egyszerű típusok.
+| Típus     | Méret         | Példa                 | Mire használjuk    |
+| --------- | ------------- | --------------------- | ------------------ |
+| `byte`    | 8 bit         | `byte x = 10;`        | kis egész szám     |
+| `short`   | 16 bit        | `short x = 1000;`     | közepes egész szám |
+| `int`     | 32 bit        | `int age = 25;`       | egész szám         |
+| `long`    | 64 bit        | `long big = 9999L;`   | nagy egész szám    |
+| `float`   | 32 bit        | `float pi = 3.14f;`   | tizedes szám       |
+| `double`  | 64 bit        | `double d = 3.14159;` | pontosabb tizedes  |
+| `char`    | 16 bit        | `char c = 'A';`       | karakter           |
+| `boolean` | 1 bit/logikai | `boolean ok = true;`  | igaz/hamis         |
+## int
+int number = 10;
+## double
+double price = 19.99;
+## char
+char letter = 'A';
+## boolean
+boolean isLoggedIn = true;
+Referencia típusok
+Ezek objektumok.
+| Típus          | Példa          |
+| -------------- | -------------- |
+| String         | `"Hello"`      |
+| Array          | `int[] nums`   |
+| Class objektum | `User user`    |
+| List           | `List<String>` |
+String name = "Anna";
+# Array példa
+int[] numbers = {1, 2, 3};
+| Primitív       | Referencia             |
+| -------------- | ---------------------- |
+| értéket tárol  | objektum címét tárolja |
+| gyorsabb       | összetettebb           |
+| nincs metódusa | van metódusa           |
+Wrapper osztályok
+Minden primitív típusnak van objektum megfelelője.
+| Primitív  | Wrapper     |
+| --------- | ----------- |
+| `int`     | `Integer`   |
+| `double`  | `Double`    |
+| `char`    | `Character` |
+| `boolean` | `Boolean`   |
+Integer number = 100;
+Típuskonverzió
+Automatikus (implicit)
+int x = 10;
+double y = x;
+Kézi (casting)
+```java id="gcz5m5"
+double d = 9.8;
+int x = (int) d;
+Default értékek
+| Típus      | Default  |
+| ---------- | -------- |
+| int        | 0        |
+| double     | 0.0      |
+| boolean    | false    |
+| char       | '\u0000' |
+| referencia | null     |
+
+2. Mi az objektum-orientált programozás(OOP)?
+egy olyan paradigma, amely a programot egymással együttműködő objektumokként modellezi, amelyek adatokat és viselkedést tartalmaznak.Az OOP alapelvei:
+Encapsulation → adatok elrejtése és védelme (private + getter/setter).Az adat közvetlenül nem elérhető kívülről
+public class User {
+    private String name;
+    public String getName() {
+        return name;
+    public void setName(String name) {
+        this.name = name;
+Inheritance → osztály örököl másiktól(extends):átveszi egy másik tulajdonságait. Dog örökli az Animal viselkedését
+class Animal {
+    void sound() {
+        System.out.println("Animal sound");
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Woof");
+Polymorphism → ugyanaz a metódus, más működés (@Override)
+class Animal {
+    void sound() {
+        System.out.println("Animal sound");
+class Dog extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Woof");
+Animal a = new Dog();
+a.sound();
+eredmény: Woof
+Abstraction → csak a lényeg megmutatása, megvalósítás később (abstract),implementáció elrejtése
+abstract class Animal {
+    abstract void sound();
+class Cat extends Animal {
+    void sound() {
+        System.out.println("Meow");
+👉 nem tudunk Animal példányt létrehozni
+Encapsulation → adatok védése
+Inheritance → kód újrahasznosítás
+Polymorphism → rugalmas viselkedés
+Abstraction → egyszerűsítés
+
+3.Mi a különbség az absztrakt osztály és az interfész között?
+Az absztrakt osztály tartalmazhat megvalósítást és állapotot, míg az interfész egy szerződés, amely metódusok definícióját adja meg, és egy osztály több interfészt is implementálhat.
+A Java nem támogatja a többszörös osztályöröklést, de interfészek implementálásával hasonló hatás érhető el, és az azonos metódusok ütközését felülírással kell kezelni.
+Az interfész default metódusai példányon keresztül hívhatók, a static metódusok csak az interfész nevével, míg a private metódusok kizárólag belső segédmetódusként használhatók.
+Abstract „részben kész osztály”:
+lehet konkrét és absztrakt metódusa is
+lehet mezője (state / állapot)
+konstruktor is lehet
+csak egy osztályt lehet örökölni
+abstract class Animal {
+    String name;
+    Animal(String name) {
+        this.name = name;
+    abstract void sound();
+    void sleep() {
+        System.out.println("Sleeping...");
+Gyerek osztály:
+class Dog extends Animal {
+    Dog(String name) {
+        super(name);
+    @Override
+    void sound() {
+        System.out.println("Woof");
+„szerződés: mit kell tudnia egy osztálynak”
+Jellemzők: csak metódus deklaráció (alapból)
+nincs állapot (régebben), most már lehet default/static metódus
+egy osztály több interfészt is implementálhat
+interface Animal {    void sound();}
+Implementálás:
+class Dog implements Animal {    @Override    public void sound() {        System.out.println("Woof");    }}
+Fő különbségek:
+Absztrakt osztályInterface lehet: állapota(mezők)nincs (csak konstansok),lehet konstruktornincs konstruktorrészben implementált
+teljesen absztrakt (alapból)csak 1 örökléstöbb interface is lehet extendsimplements
+Absztrakt osztály:
+class Dog extends Animal
+Interface:
+class Dog implements Animal
+Mikor melyiket használjuk?
+Abstract class:
+közös viselkedés + közös állapot
+pl. Animal, Vehicle
+Interface: viselkedés definiálása pl. Flyable, Comparable, Runnable
+Abstract class → részleges implementáció + állapot
+Interface → viselkedés szerződés
+Az abstract class „mit tud már”, az interface „mit kell tudnia”.
+
+4. Mi a "String immutability" jelentése Java-ban? 
+A String immutability azt jelenti, hogy a Java String objektumok nem módosíthatók létrehozás után, minden változtatás új String objektumot hoz létre,míg a StringBuilder mutable, és 
+ugyanazon objektumon belül módosítja a tartalmat, így hatékonyabb többszöri módosítás esetén.
+String name = "Anna";
+name = name + " Maria";
+System.out.println(name); 
+Eredmény: Anna Maria
+Mi történt valójában?
+"Anna" → eredeti String (nem változik)
+"Anna Maria" → új String objektum
+
+5. Hogyan működik a "Garbage Collection" Java-ban? 
+Automatikusan felszabadítja azokat az objektumokat a heap memóriából, amelyekre már nincs hivatkozás, így optimalizálva a memóriahasználatot.
+Nem determinisztikus, ezért a finalize() metódus végrehajtása nem garantált, és a System.gc() hívás sem biztosítja a GC azonnali futását.
+public class Test {
+    public static void main(String[] args) {
+        User u1 = new User(); // objektum létrejön
+        User u2 = new User(); // másik objektum
+        u1 = null; // u1 objektum „szemét” lesz
+a Garbage Collector később eltávolítja az u1 által használt memóriát
+
+6. Mi a különbség a == és az equals() használata között? 
+A == operátor referenciát hasonlít össze(azonos objektum-e), míg az equals() metódus az objektumok tartalmi egyenlőségét vizsgálja.
+"text" → String pool
+new String() → új objektum
+== → referencia
+equals() → tartalom
+String a = new String("Hello");
+String b = new String("Hello");
+System.out.println(a == b);
+👉 eredmény: false, mert két külön objektum
+equals() metódus👉 „tartalmat hasonlít össze”
+azt nézi, hogy ugyanaz-e az érték
+String a = new String("Hello");
+String b = new String("Hello");
+System.out.println(a.equals(b));
+👉 eredmény: true, mert a szöveg ugyanaz
+👉 két külön objektum → külön referencia
+🔹 equals() metódus
+👉 „ugyanaz az érték/tartalom?”
+objektumok logikai egyenlőségét vizsgálja
+pl. String felülírja
+String a = new String("Hello");String b = new String("Hello");System.out.println(a.equals(b)); // true
+👉 a tartalom azonos
+🔹 String pool eset
+String a = "Hello";String b = "Hello";System.out.println(a == b); // true
+👉 ugyanarra a referenciára mutatnak (String pool)
+==equals()referencia összehasonlítástartalom összehasonlításobjektum címet néziértéket néziprimitíveknél okobjektumokhoz ajánlott
+🔥 Gyakorlati szabály:
+Objektumoknál (pl. String, saját class):
+❌ ==
+✅ equals()
+„ugyanaz az objektum?”
+equals() → „ugyanaz az érték?”
+A legtöbb esetben objektumoknál equals() a helyes választás.
+
+7. Mi a különbség az ArrayList és a LinkedList között?
+Az ArrayList tömb alapú, gyors indexelést biztosít, míg a LinkedList láncolt lista, amely gyorsabb beszúrást és törlést tesz lehetővé, de lassabb hozzáférést eredményez.
+ArrayList.get(i) → O(1)
+LinkedList.get(i) → O(n) 
+ciklus + get(i) → O(n²)
+List<String> list = new ArrayList<>();
+list.add("A");
+list.add("B");
+System.out.println(list.get(1));
+List<String> list = new LinkedList<>();
+list.add("A");
+list.add("B");
+
+8. Mi az a hashCode() és equals() metódus? Miért fontosak ezek?
+Az equals() az objektumok tartalmi egyenlőségét vizsgálja, míg a hashCode() egy hash értéket ad vissza, amelyet hash alapú kollekciók használnak; ha két objektum equals() szerint egyenlő,
+akkor a hashCode()-juknak is azonosnak kell lennie.
+HashSet → hashCode + equals,ha nincs override → duplikáció lehet
+equals true ⇒ hashCode is ugyanaz
+String a = new String("Hello");
+String b = new String("Hello");
+System.out.println(a.equals(b)); // true👉 mert a tartalom ugyanaz
+System.out.println(a.hashCode());
+System.out.println(b.hashCode());
+👉 azonos tartalom → azonos hashCode (általában)
+
+9. Mi a különbség a throw és a throws között?
+A throw egy konkrét kivétel dobására szolgál a kódban, míg a throws a metódus deklarációjában jelzi, hogy az adott metódus kivételt dobhat.A checked exception-öket kötelező kezelni vagy
+továbbadni, különben a kód nem fordul le.
+throw 👉 „kivétel dobása” konkrét kivételt dob futás közben
+public void checkAge(int age) {
+    if (age < 18) {
+        throw new IllegalArgumentException("Túl fiatal");
+throws 👉 „kivétel deklarálása”
+jelzi, hogy a metódus dobhat kivételt,nem kezeli, csak továbbadja
+public void readFile() throws IOException {
+    FileReader file = new FileReader("test.txt"); 👉 a hívó félnek kell kezelnie
+
+10. Mi az a final, finally és finalize kulcsszó Java-ban?
+A final módosító korlátozza a változtatást, a finally blokk mindig lefut kivételkezelés után, míg a finalize() metódust a Garbage Collector hívhatja meg objektum törlése előtt, 
+de nem garantált a végrehajtása.
+try → első blokk
+throw → ugrás catch-be
+finally → mindig lefut
+finalize() → csak ha meghívják vagy a GC akarja
+1. final példa (változó)
+final int x = 10;
+x = 20; // ❌ hiba
+Példa (metódus):
+class A {final void show(){System.out.println("Hello");}}class B extends A {// void show() {} ❌ nem lehet felülírni}
+Példa (osztály): final class A {}// class B extends A {} ❌ nem lehet örökölni
+finally👉 „mindig lefutó blokk”
+try-catch után használjuk, akkor is lefut, ha van exception
+try {int x = 10 / 0;} catch (Exception e) {System.out.println("Hiba");} finally {System.out.println("Mindig lefut");}
+👉 a finally blokk mindig végrehajtódik
+🔹 3. finalize()👉 „GC előtti takarítás” (elavult!)a Garbage Collection hívhatja meg, már nem ajánlott használni
+class Test {@Override    protected void finalize() {System.out.println("Objektum törlés előtt");}}
+⚠️ Fontos: nem garantált, hogy lefutJava 9+ óta elavult
+finalfinallyfinalize()kulcsszó blokk metódus változhatatlanság mindig lefut, GC-hez kötött compile-timeruntime GC idő
+final → nem módosítható
+finally → mindig lefut
+finalize() → elavult GC hook
+„final = fix, finally = mindig, finalize = régi GC metódus”
+
+11. Hogyan kezeljük a kivételeket Java-ban?
+A kivétel (exception) egy olyan esemény, amely futás közben hibát jelez (pl. osztás nullával, fájl nem található). A kivételek kezelése Java-ban az egyik alapvető eszköz a hibák biztonságos
+és rendezett kezelésére. A cél az, hogy a program ne álljon le váratlanul, hanem kontrollált módon reagáljon a problémákra.
+1.try-catch → hibák kezelése
+finally → mindig lefut (pl. erőforrások lezárása)
+throw → kivétel dobása manuálisan
+throws → kivétel továbbadása
+| `throw`             | `throws`              |
+| ------------------- | --------------------- |
+| kivételt dob        | kivételt jelez        |
+| metóduson belül     | metódus fejlécében    |
+| egy konkrét kivétel | több kivétel is lehet |
+több catch ág
+különböző hibák külön kezelése
+try {String s = null;System.out.println(s.length());} catch (NullPointerException e) {System.out.println("Null hiba");} catch (Exception e) {System.out.println("Egyéb hiba");}
+3. finally blokk👉 mindig lefut (pl. erőforrás lezárás)
+try {int x = 10 / 2;} finally {System.out.println("Mindig lefut");}
+4. throw (kivétel dobása)👉 saját hiba generálása
+if (age < 18) {throw new IllegalArgumentException("Túl fiatal");}
+5. throws (továbbadás)👉 metódus jelzi, hogy kivételt dobhat
+public void readFile() throws IOException {FileReader file = new FileReader("test.txt");}
+6. try-with-resources👉 automatikus erőforrás kezelés
+try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {System.out.println(br.readLine());} catch (IOException e) {e.printStackTrace();}
+🔑 Kivétel típusok:
+Checked exception → kötelező kezelni (pl. IOException)
+Unchecked exception → nem kötelező (pl. RuntimeException)
+👉 Kivételkezelés eszközei:
+try-catch → kezelés
+finally → mindig lefut
+throw → kivétel dobása
+throws → kivétel továbbadása
+👉 Cél: stabil, hibatűrő program működés.
+
+12. Mi a különbség a "checked" és "unchecked" kivételek között?
+Checked exception (ellenőrzött): fordításkor kezelni kell pl. IOException
+Unchecked exception: futás közben jelentkezik
+pl. NullPointerException, ArithmeticException
+A különbség a **checked** és **unchecked** kivételek között a Java-ban az, hogy **kötelező-e őket kezelni fordításkor**.
+Checked exception👉 „fordításkor kötelező kezelni”
+* a fordító ellenőrzi
+* **try-catch vagy throws kötelező**
+* általában külső hibák (pl. fájl, hálózat)
+import java.io.*;
+public void readFile() {
+    try {
+        FileReader file = new FileReader("test.txt");
+    } catch (IOException e) {
+        System.out.println("Hiba: " + e.getMessage());
+👉 ha nem kezeled → fordítási hiba
+Unchecked exception👉 „nem kötelező kezelni”
+* futásidőben történik
+* nem kell try-catch
+* programozási hibák
+int x = 10 / 0; // ArithmeticException
+👉 lefut, de runtime hibát dob
+| Checked                 | Unchecked                     |
+| ----------------------- | ----------------------------- |
+| kötelező kezelni        | nem kötelező                  |
+| compile-time ellenőrzés | runtime hiba                  |
+| Exception leszármazott  | RuntimeException leszármazott |
+# 🔗 Példa throws-szal:
+public void readFile() throws IOException {
+    FileReader file = new FileReader("test.txt");
+👉 itt nem kezeljük, csak továbbadjuk
+# 🔹 Tipikus példák:
+## Checked:
+* IOException
+* SQLException
+## Unchecked:
+* NullPointerException
+* IllegalArgumentException
+* ArithmeticException
+# 🔥 Röviden:
+* **Checked** → kötelező kezelni (külső hibák)
+* **Unchecked** → nem kötelező (programozási hibák)
+👉 „checked = compiler figyel, unchecked = runtime meglepetés”
+
+13. Mi a konstruktor Java-ban?
+A konstruktor Java-ban egy speciális metódus, amely egy objektum létrehozásakor automatikusan lefut, és az objektum kezdeti állapotának beállítására szolgál: inicializálja az adatokat
+lehet paraméteres vagy paraméter nélküli
+túlterhelhető (overloading)
+BankAccount acc = new BankAccount("Anna", 1000);
+👉 létrehozza az objektumot és beállítja:
+owner = "Anna"
+balance = 1000
+OOP alapelvek megjelenése:
+✔ Encapsulation (adatok + műveletek együtt)
+a balance csak metódusokon keresztül változik
+✔ Adatvédelem logikával
+nem lehet negatív kivét (ellenőrzés van)
+✔ Konstruktor biztosítja az érvényes kezdő állapotot
+
+14. Mi az a super kulcsszó?
+A super kulcsszó Java-ban az ősosztályra (szülőosztályra) való hivatkozást jelenti. Akkor használjuk, amikor egy leszármazott osztályból el akarjuk érni a szülő osztály tagjait.
+Szülőosztály konstruktorának hívása
+Szülőosztály metódusának elérése
+Szülőosztály változójának elérése
+segít az öröklés korrekt működésében
+class Jarmu {
+      Jarmu() {
+      System.out.println("Jármű létrejött");
+    class Auto extends Jarmu {
+    Auto() {
+        super(); // szülő konstruktor hívása
+        System.out.println("Autó létrejött");
+    először a Jarmu konstruktora fut le
+utána az Auto konstruktora
+❗ Fontos: a super() mindig az első sorban kell legyen
+
+15. Mi a különbség a this és super között?
+| `super`           | `this`              |
+| ----------------- | ------------------- |
+| szülő osztály     | aktuális osztály    |
+| ős tagokra mutat  | saját tagokra mutat |
+| öröklésnél fontos | mindig használható  |
+A **`this`** és a **`super`** kulcsszavak a Java-ban az objektumokon belüli hivatkozásokra szolgálnak, de **különböző szintre mutatnak**.
+`this`👉 „az aktuális objektumra mutat”
+* aktuális osztály mezőinek elérése
+* konstruktorok hívása
+class User {
+    String name;
+    User(String name) {
+        this.name = name; // mező = paraméter
+👉 `this.name` → az aktuális objektum mezője
+## 🔸 Konstruktor hívás:
+class User {
+    String name;
+    User() {
+        this("Unknown"); // másik konstruktor hívása
+    User(String name) {
+        this.name = name;
+# 🔹 `super`👉 „a szülőosztályra mutat”
+* ősosztály mezőinek/metódusainak elérése
+* ős konstruktor hívása
+class Animal {
+    String name = "Animal";
+class Dog extends Animal {
+    String name = "Dog";
+    void printNames() {
+        System.out.println(this.name);  // Dog
+        System.out.println(super.name); // Animal
+## 🔸 Konstruktor hívás:
+class Animal {
+    Animal(String name) {
+        System.out.println(name);
+class Dog extends Animal {
+    Dog() {
+        super("Kutya"); // szülő konstruktor
+| this                    | super                   |
+| ----------------------- | ----------------------- |
+| aktuális objektum       | szülő osztály           |
+| saját mezők/metódusok   | ős mezők/metódusok      |
+| saját konstruktor hívás | szülő konstruktor hívás |
+* **this** → „én” (aktuális objektum)
+* **super** → „szülő” (ősosztály)
+👉 this = current object, super = parent object
+
+16. Mi az a statikus blokk?
+A statikus blokk (static block) Java-ban egy speciális kódrész, amely az osztály betöltésekor fut le, még azelőtt, hogy bármilyen objektum létrejönne.
+static {
+    // inicializáló kód
+csak egyszer fut le,akkor, amikor az osztályt a JVM betölti
+független attól, hogy hány objektum jön létre
+nem használhat nem statikus (instance) változókat közvetlenül
+nincs neve
+nincs paramétere
+nincs visszatérési értéke
+Mikor fut le?
+amikor: először példányosítod az osztályt
+vagy statikus tagját használod
+Sorrend:
+Szülő statikus blokk
+Gyerek statikus blokk
+Szülő konstruktor
+Gyerek konstruktor
+class Test {
+    static int x = 10;
+    static {
+        System.out.println("Statikus blokk: x = " + x);
+        x = 20;
+    Test() {
+        System.out.println("Konstruktor: x = " + x);
+        x++;
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Main kezdés");
+        Test t1 = new Test();
+        Test t2 = new Test();
+        System.out.println("Main vége: x = " + Test.x);
+Main kezdés
+Statikus blokk: x = 10
+Konstruktor: x = 20
+Konstruktor: x = 21
+Main vége: x = 22
+statikus változó = egy darab létezik
+konstruktor = minden példány módosíthatja
+statikus blokk = egyszer fut, de nagyon korán
+
+17. Mi az a "singleton" osztály?
+A Singleton (egyke) egy tervezési minta (design pattern), aminek a lényege:
+Egy adott osztályból csak egyetlen példány (instance) létezhet.
+Ehhez az egy példányhoz globálisan hozzá lehet férni.
+Olyan, mintha lenne egy “egyedüli” objektumod, amit mindenki ugyanúgy használ.
+Miért hasznos? Nem jön létre feleslegesen több példány
+Központi vezérlés
+De van hátránya is:
+Nehezebb tesztelni
+Globális állapot → könnyen “spagetti” kód lesz
+class Singleton {
+    private static Singleton instance;
+    private Singleton() {} // kívülről nem példányosítható
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        return instance;
+
+18. Hogyan hozunk létre egy immutable osztályt?
+Az immutable (változtathatatlan) osztály olyan osztály, amelynek példányai létrehozás után nem módosíthatók.
+Létrehozása: minden mező private és final
+az értékadás konstruktoron keresztül történik
+nincs setter metódus, csak getterek vannak
+módosítható mezők esetén defenzív másolatot használunk, így biztosítjuk, hogy az objektum állapota nem változhat meg létrehozás után.
+public final class Person {
+    private final String name;
+    private final int age;
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    public String getName() { return name; }
+    public int getAge() { return age; }
+
+19. Mi a különbség az abstract class és concrete class között?
+Az abstract class egy olyan osztály, amely nem példányosítható, és tartalmazhat absztrakt (meg nem valósított) metódusokat. Általában közös viselkedést és szerkezetet definiál a 
+leszármazott osztályok számára. A concrete class ezzel szemben teljesen implementált, minden metódusa meg van valósítva, és közvetlenül példányosítható.
+abstract class Animal {
+    abstract void makeSound(); // nincs implementáció
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Woof");
+public class Main {
+    public static void main(String[] args) {
+        // Animal a = new Animal(); ❌ nem lehet példányosítani
+        Dog d = new Dog(); // ✔ concrete class példány
+        d.makeSound();    // Woof
+
+20. Hogyan működik a switch utasítás Java-ban? 
+A switch utasítás több elágazás kezelésére szolgál egy változó értéke alapján.
+A program összehasonlítja a változót a case ágakkal, és a megfelelő ágat hajtja végre.
+A break megakadályozza a további ágak lefutását (fall-through).
+break nélkül a következő case-ek is lefutnak
+a default opcionális
+használható pl. int, String, enum típusokra
+int day = 2;
+switch (day) {
+    case 1:
+        System.out.println("Hétfő");
+        break;
+    case 2:
+        System.out.println("Kedd");
+        break;
+    case 3:
+        System.out.println("Szerda");
+        break;
+    default:
+        System.out.println("Ismeretlen nap");
+
+21. Mi az a volatile kulcsszó?
+A volatile kulcsszó azt biztosítja, hogy egy változó értéke mindig a főmemóriából legyen olvasva, és minden szál azonnal lássa a legfrissebb értéket.
+Így biztosítja a láthatóságot (visibility) több szál között, de nem garantálja az atomi műveleteket. Ha egy szál módosítja a running értékét, a többi szál azonnal látni fogja.
+class Example {
+    volatile boolean running = true;
+    void stop() {
+        running = false;
+
+22. Mi a különbség a synchronized blokk és a synchronized metódus között?
+A synchronized kulcsszó szálbiztosságot biztosít, de használható metóduson és blokkon is.
+A synchronized metódus az egész metódust zárolja (lockolja) az adott objektumon (vagy statikus esetben az osztályon).
+A synchronized blokk csak egy adott kódrészletet zárol, és megadható, hogy melyik objektum legyen a lock.
+A blokk rugalmasabb és hatékonyabb, mert kisebb kódrészt zár le.
+class Example {
+    // synchronized metódus
+    public synchronized void method() {
+        // teljes metódus lock alatt
+    public void methodWithBlock() {
+        synchronized (this) {
+            // csak ez a rész lockolt
+
+23. Mi a boiletplate kód?
+Olyan előre megírt, ismétlődő alapkód, amit sok projektben újra és újra használunk ugyanarra a célra. 
+Nem a program egyedi logikája, hanem az a “váz” vagy “sablon”, ami szükséges ahhoz, hogy minden működjön.
+Egy webalkalmazás induló fájljai
+Szerver beállítások
+Importok és konfigurációk
+Ismétlődő osztály- vagy függvénystruktúrák
+Tesztkörnyezet alapjai
+Például egy egyszerű React komponensben:
+```jsx
+import React from "react";
+function App() {
+  return (
+    <div>
+      <h1>Hello World</h1>
+    </div>
+export default App;
+Ebben a tényleges egyedi rész talán csak a `<h1>Hello World</h1>`, a többi tipikus boilerplate.
+A “boilerplate” eredetileg szabványosított szövegekre utalt (pl. szerződésekben vagy újságokban), amelyeket változtatás nélkül újra felhasználtak.
+Programozásban gyakran hallod így: “Túl sok boilerplate van ebben a nyelvben.” sok kötelező, repetitív kódot kell írni. “Van hozzá boilerplate projekt.” kész induló sablon projekt
+Modern keretrendszerek próbálják csökkenteni a boilerplate-et. Például Ruby on Rails vagy Next.js sok dolgot automatikusan kezel.
+
+24. Mi az a lambda kifejezés? 
+A lambda kifejezés egy rövid, névtelen függvény Java-ban, amelyet főként funkcionális interfészek megvalósítására használunk.
+Lehetővé teszi, hogy kevesebb boilerplate kóddal adjunk meg viselkedést.
+Szintaxis:
+(paraméterek) -> kifejezés vagy kódtömb
+List<String> list = Arrays.asList("A", "B", "C");
+list.forEach(s -> System.out.println(s));
+Itt a s -> System.out.println(s) egy lambda kifejezés.
+
+25. Mi az a funkcionális interfész?
+Egy olyan interfész Java-ban, amely pontosan egy absztrakt metódust tartalmaz.
+Ezeket használjuk lambda kifejezésekkel.
+@FunctionalInterface
+interface MyFunction {
+    void execute();
+A @FunctionalInterface annotáció nem kötelező, de jelzi és ellenőrzi, hogy valóban csak egy absztrakt metódus van.
+
+II.API
+
+26. Mi az a Stream API?
+A Stream API Java-ban egy eszköz adatok (pl. listák) feldolgozására deklaratív, funkcionális stílusban.
+Lehetővé teszi az adatok szűrését, rendezését és transzformálását láncolható műveletekkel, anélkül hogy az eredeti adatstruktúrát módosítanánk.
+List<String> names = Arrays.asList("Anna", "Béla", "Cecil");
+names.stream()
+     .filter(n -> n.startsWith("A"))
+     .forEach(System.out::println);
+Itt a stream() segítségével szűrjük és feldolgozzuk az adatokat funkcionális módon.
+
+27.Mi a különbség a map és a flatMap között?
+A map és a flatMap mindkettő Stream művelet Java-ban, de eltér a működésük:
+A map minden elemet egy másik elemmé alakít, és megőrzi a struktúrát (1-1 leképezés).
+A flatMap viszont az elemeket “kilapítja”, tehát ha egy elem több elemet eredményez, azokat egyetlen streammé egyesíti.
+map = átalakítás flatMap = átalakítás + “kilapítás”
+List<List<String>> list = Arrays.asList(
+    Arrays.asList("A", "B"),
+    Arrays.asList("C", "D")
+// map → Stream<List<String>>
+list.stream()
+    .map(l -> l.stream())
+    .forEach(System.out::println);
+// flatMap → Stream<String>
+list.stream()
+    .flatMap(l -> l.stream())
+    .forEach(System.out::println);
+
+28. Mi a különbség a filter és a forEach között a Stream API-ban?
+A filter és a forEach két külön Stream művelet Java-ban
+A filter egy köztes (intermediate) művelet, amely feltétel alapján kiszűri az elemeket, és egy új streamet ad vissza.
+A forEach egy végső (terminal) művelet, amely végigmegy az elemeken és végrehajt egy műveletet, de nem ad vissza új streamet.
+filter = adat kiválasztása (új stream)
+forEach = adat feldolgozása (lezáró művelet)
+List<String> names = Arrays.asList("Anna", "Béla", "Cecil");
+// filter → szűrés
+names.stream()
+     .filter(n -> n.startsWith("A"))
+     .forEach(System.out::println);
+// forEach → feldolgozásnames.stream()
+     .forEach(System.out::println);
+
+29. Mi az a Optional Java-ban?
+Az Optional egy konténer objektum Java-ban, amely egy értéket tartalmazhat vagy lehet üres.
+Célja, hogy csökkentse a NullPointerException hibákat és kifejezőbbé tegye a null-kezelést.
+Röviden: az Optional egy biztonságos wrapper, ami jelzi, hogy egy érték lehet hiányzó.
+Optional<String> name = Optional.of("Anna");
+System.out.println(name.get()); // Anna
+//Üres Optional:
+Optional<String> empty = Optional.empty();
+//Biztonságos használat:
+Optional<String> name = Optional.ofNullable(null);
+name.ifPresent(n -> System.out.println(n));
+
+30. Mi az az ExecutorService?
+Az ExecutorService egy Java API, amely szálak (threads) kezelésére és feladatok párhuzamos futtatására szolgál.
+Egyszerűbbé teszi a thread-ek kezelését, mint a manuális Thread létrehozás.
+feladatok futtatása szálpoolban
+jobb erőforrás-kezelés
+ExecutorService executor = Executors.newFixedThreadPool(2);
+executor.submit(() -> {
+    System.out.println("Feladat fut");
+executor.shutdown();
+
+31. Mi a különbség a Callable és a Runnable között?
+A Runnable és a Callable mindkettő párhuzamosan futtatható feladat Java-ban, de van fontos különbség:
+A Runnable nem ad vissza értéket és nem dob ellenőrzött kivételt void run()
+A Callable visszatérési értéket ad V call() és kivételt is dobhat.
+Runnable = nincs return
+Callable = van return + exception kezelés támogatott
+Runnable task = () -> System.out.println("Fut a feladat");
+Callable<Integer> task = () -> 42;
+
+32. Hogyan lehet szálakat (threads) létrehozni Java-ban?
+Java-ban több módon lehet:
+A Thread osztály kiterjesztésével (extends Thread)
+A Runnable interfész implementálásával
+ExecutorService használatával (ajánlott modern megoldás)
+Callable + Future használatával, ha visszatérési érték is kell
+Thread osztály:
+class MyThread extends Thread {public void run() {System.out.println("Thread fut");}}
+Runnable (gyakoribb):
+Runnable task = () -> System.out.println("Runnable fut");new Thread(task).start();
+ExecutorService (ajánlott):
+ExecutorService executor = Executors.newSingleThreadExecutor();executor.submit(() -> System.out.println("Executor fut"));executor.shutdown();
+Thread = klasszikus, de kevésbé rugalmas
+Runnable = egyszerűbb és gyakori
+ExecutorService = modern, ajánlott megoldás
+
+33. Mi az a synchronized blokk? 
+Egy olyan kódrészlet, amelyet csak egy szál hajthat végre egyszerre egy adott objektum zárolásával.
+Célja a szálbiztonság biztosítása és a versenyhelyzetek (race condition) elkerülése.
+class Counter {private int count = 0;public void increment() {synchronized (this) {count++;}}}
+csak egy szál fér hozzá egyszerre a blokkolt részhez
+az objektum (pl. this) szolgál lock-ként
+finomabb vezérlést ad, mint a teljes metódus zárolása
+
+34. Mi a wait() és a notify() metódusok célja?
+A szálak közötti kommunikációra szolgálnak és az Object osztály részei.
+A wait() leállítja az aktuális szálat, amíg egy másik szál nem értesíti.
+A notify() felébreszt egy, a monitoron várakozó szálat.
+A notifyAll() pedig az összes várakozó szálat felébreszti.
+Ezeket mindig synchronized blokkban kell használni.
+class Example {synchronized void waitExample()throws InterruptedException {wait(); // szál várakozik}synchronized void notifyExample() {notify(); // egy várakozó szál felébresztése}}
+wait() = szál várakozik
+notify() = egy szál ébresztése
+A szálak közötti koordinációra használjuk
+
+35. Mi a különbség a Comparable és a Comparator között?
+Az objektumok rendezésére szolgálnak, de eltér a használatuk:
+A Comparable az osztályon belüli természetes sorrendet definiálja (compareTo metódus).
+A Comparator külső összehasonlítást ad meg, így többféle rendezési logikát is lehet vele használni (compare metódus).
+Comparable (belső rendezés)
+class Person implements Comparable<Person> {
+    String name;
+    int age;
+    public int compareTo(Person other) {
+        return this.age - other.age;
+Comparator (külső rendezés)
+Comparator<Person> byName = (p1, p2) -> p1.name.compareTo(p2.name);
+Comparable = “természetes” sorrend az osztályban
+Comparator = rugalmas, külső rendezési szabályok
+
+36. Hogyan működik a HashMap Java-ban?
+A HashMap Java-ban kulcs–érték párokat tárol, és hash függvény alapján gyors hozzáférést biztosít az elemekhez.
+A kulcsból egy hash érték képződik, amely meghatározza, melyik “bucket”-be kerül az adat. Ütközés esetén (ha több kulcs ugyanabba a bucketbe kerül) láncolást vagy (újabb Java verziókban) 
+fa-struktúrát használ.
+HashMap<String, Integer> map = new HashMap<>();map.put("Anna",25);map.put("Béla", 30);System.out.println(map.get("Anna")); //25
+hash alapú tárolás
+kulcs → hash → bucket
+átlagosan O(1) műveletek (get/put)
+ütközés esetén láncolás /fa struktúra
+
+37. Mi a különbség a HashSet és a TreeSet között?
+Mindkettő egyedi elemeket tárol Java-ban, de eltér a működésük:
+A HashSet hash táblát használ, nem garantál sorrendet, viszont nagyon gyors (általában O(1)).
+A TreeSet rendezett halmaz, amely fastruktúrát (Red-Black Tree) használ, így az elemek mindig rendezve vannak, de lassabb (O(log n)).
+Set<String> hashSet = new HashSet<>();hashSet.add("B");hashSet.add("A");hashSet.add("C");System.out.println(hashSet); // nincs garantált sorrend
+Set<String> treeSet = new TreeSet<>();treeSet.add("B");treeSet.add("A");treeSet.add("C");System.out.println(treeSet); // [A, B, C]
+HashSet = gyors, nincs sorrend
+TreeSet = rendezett, lassabb(log n)
+
+38. Mi az a try-with-resources?
+Egy olyan try blokk, amely automatikusan bezárja a használt erőforrásokat (pl. fájl, stream, adatbázis kapcsolat), amikor a blokk befejeződik.
+Csak olyan objektumokkal működik, amelyek implementálják az AutoCloseable interfészt.
+try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {System.out.println(br.readLine());} catch (IOException e){e.printStackTrace();}
+automatikus erőforrás-zárás
+nincs szükség külön finally blokkra
+biztonságosabb és tisztább kód
+
+39. Mi az a Reflection API?
+Lehetővé teszi, hogy futásidőben (runtime) vizsgáljuk és módosítsuk az osztályokat, metódusokat, mezőket és konstruktorokat.
+Ez azt jelenti, hogy dinamikusan hozzáférhetünk az objektumok belső szerkezetéhez.
+Class<?> clazz = Class.forName("java.lang.String");System.out.println(clazz.getName());
+futásidőben vizsgálható osztálystruktúra
+metódusok, mezők elérése és meghívása dinamikusan
+erős, de lassabb és veszélyesebb (gyengíti a típusbiztonságot)
+
+III.JDBC
+
+40. Mi a JVM, JRE és JDK?
+Az Őkoszisztéma alapkomponensei:
+JVM (Java Virtual Machine): a Java bájtkódot futtatja, platformfüggetlenné teszi a Java-t.
+JRE (Java Runtime Environment): tartalmazza a JVM-et és a futtatáshoz szükséges könyvtárakat.
+JDK (Java Development Kit): a JRE-n felül fejlesztői eszközöket is tartalmaz (pl. fordító – javac).
+JVM = futtat
+JRE = futtatási környezet
+JDK = fejlesztői csomag (fordítással együtt)
+
+41. Hogyan működik a hashCode() és equals() metódus?
+Objektumok összehasonlítására és hash-alapú adatszerkezetek (pl. HashMap, HashSet) működésére szolgálnak.
+Az equals() metódus azt vizsgálja, hogy két objektum tartalmilag egyenlő-e.
+Az Object osztályban alapértelmezés szerint referencia-összehasonlítást végez(==).
+Gyakran felül kell írni, hogy a mezők alapján hasonlítson.
+a.equals(b)→ true, ha a két objektum tartalma megegyezik.
+A hashCode() metódus egy egész számot ad vissza, amely az objektumhoz tartozó hash érték.
+Hash-alapú gyűjtemények használják a gyors kereséshez.
+Az objektumot egy „bucket”-be sorolja a hash érték alapján.
+A két metódus kapcsolata (fontos szabály)
+A Java szabály (contract): ha két objektum equals() szerint egyenlő, akkor a hashCode()-juk is azonos kell legyen.
+a.equals(b) == true  ⇒  a.hashCode() == b.hashCode()
+Fordítva nem kötelező igaz (hash ütközés előfordulhat).
+Miért kell mindkettőt felülírni?
+Hash-alapú struktúrák működése:
+hashCode() alapján kiválasztja a tárolási helyet
+equals()-szal pontosan ellenőrzi az egyenlőséget
+Ha csak az egyiket írjuk felül, hibás működés léphet fel (pl. HashSet nem találja meg az elemet).
+equals() → logikai (tartalmi) összehasonlítás
+hashCode() → hash érték számítása
+Egyenlő objektumoknak azonos hashCode-dal kell rendelkezniük
+Mindkettőt együtt kell felülírni hash-alapú kollekciók esetén
+
+42. Mi az a HashMap és hogyan működik?
+A HashMap egy Java-ban használt adatszerkezet, amely kulcs–érték párok tárolására szolgál.
+A kulcsból hashCode() alapján számol egy hash értéket
+ez alapján kiválaszt egy tárolási helyet (bucket)
+ütközés esetén equals()-szal dönti el, melyik elem a megfelelő
+gyors keresés (átlagosan O(1))
+a kulcsok egyediek
+sorrendet nem tart fenn
+Összefoglalva: a HashMap hash-alapú, kulcs–érték párokat gyorsan kezelő adatszerkezet.
+import java.util.HashMap;
+public class Main {
+    public static void main(String[] args) {
+        HashMap<String, Integer> map = new HashMap<>();
+        // elemek beszúrása
+        map.put("alma", 10);
+        map.put("körte", 20);
+        // érték lekérdezése
+        System.out.println(map.get("alma")); // 10
+        // kulcs meglétének ellenőrzése
+        System.out.println(map.containsKey("körte")); // true
+
+43. Mi az a TreeMap?
+Egy Java-ban használt adatszerkezet, amely kulcs–érték párokat tárol, és a kulcsokat rendezett sorrendben tartja.
+Belsőleg bináris keresőfa (piros-fekete fa) segítségével működik
+a kulcsok automatikusan rendezve vannak: természetes sorrend (pl. String, számok) vagy Comparator alapján
+Jellemzői:
+kulcsok mindig rendezettek
+nem enged null kulcsot(általában)
+műveletek időkomplexitása:O(log n)
+lassabb, mint HashMap, de rendezett
+import java.util.TreeMap;public class Main {public static void main(String[] args) {TreeMap<String, Integer> map = new TreeMap<>();map.put("körte", 20);        
+map.put("alma", 10); ap.put("banán", 30);System.out.println(map);// kimenet: {alma=10, banán=30, körte=20}}}
+Összefoglalás: a TreeMap egy rendezett kulcs–érték tároló, amely a kulcsokat automatikusan sorrendben tartja, és logaritmikus időben kezeli a műveleteket.
+
+44. Mi a különbség a LinkedHashMap és a HashMap között? 
+Mindkettő Java-ban kulcs–érték párok tárolására szolgáló adatszerkezet, de a sorrendkezelésben különböznek.
+HashMap: nem tart fenn semmilyen sorrendet
+az elemek sorrendje véletlenszerű / nem garantált
+nagyon gyors (átlag O(1))
+HashMap<String, Integer> map = new HashMap<>();map.put("alma", 10);map.put("körte", 20);map.put("banán", 30);System.out.println(map);
+A Kimenet sorrendje nem biztos
+LinkedHashMap: megőrzi a beszúrás sorrendjét
+az elemek mindig abban a sorrendben jelennek meg, ahogy bekerültek
+kicsit lassabb, mint a HashMap
+LinkedHashMap<String, Integer> map = new LinkedHashMap<>();map.put("alma", 10);map.put("körte", 20);map.put("banán", 30);System.out.println(map);
+Kimenet: {alma=10, körte=20, banán=30}
+Fő különbség
+HashMap:sorrend nincs,teljesítmény gyorsabb, belső szerkezet: hash
+LinkedHashMap: garantálva a beszúrási sorrend  kicsit lassabb, belső szerkezet:táblahash + láncolt lista
+Összefoglalás:
+HashMap → gyors, de nem rendezett
+LinkedHashMap → megtartja a beszúrás sorrendjét
+mindkettő kulcs–érték párokat tárol hash alapokon
+
+45. Hogyan működik a TreeSet?
+Egy Java-ban használt kollekció, amely egyedi elemeket tárol rendezett sorrendben.
+belsőleg piros-fekete (balanced) bináris keresőfát használ
+az elemeket automatikusan rendezi
+természetes sorrend (pl. számok, Stringek)
+vagy Comparator alapján
+minden elem egyedi (duplikátum nem lehet)
+rendezett halmaz
+nem enged duplikációt
+műveletek időkomplexitása: O(log n)
+lassabb, mint a HashSet, de rendezett
+import java.util.TreeSet;public class Main {public static void main(String[] args) {TreeSet<String> set = new TreeSet<>(); set.add("körte");       
+set.add("alma");set.add("banán");set.add("alma"); // duplikátum, nem kerül be System.out.println(set); // kimenet: [alma, banán, körte] }}
+Összefoglalás:
+A TreeSet egy rendezett halmaz, amely egyedi elemeket tárol, és automatikusan sorba rendezi őket egy bináris keresőfa segítségével.
+
+46. Mi a különbség a Set és a List között?
+Mindkettő Java kollekció, de eltérő módon tárolják az elemeket.
+List
+rendezett (sorrendet megőriz)
+enged duplikátumokat
+index alapján elérhető elemek
+List<String> list = new ArrayList<>();list.add("alma");list.add("alma");list.add("körte");System.out.println(list);// [alma, alma, körte]
+Set
+nem enged duplikátumot
+alapból nem garantál sorrendet (pl.HashSet)
+nincs indexelés
+Set<String> set = new HashSet<>();set.add("alma");set.add("alma");set.add("körte");System.out.println(set);// pl. [körte, alma] (sorrend nem biztos)
+Fő különbségek
+List Duplikátum engedélyezett,Sorrendet megőrzi, Indexelés van
+sET Duplikátum nem engedélyezett,sorrend nem garantált, nincs indexelés
+Összefoglalás
+List → rendezett, duplikátumokat enged, indexelhető
+Set → egyedi elemeket tárol, nem feltétlenül rendezett
+List = sorrend + ismétlés lehet
+Set = egyediség + nincs duplikátum
+
+76. Mi az a PriorityQueue?
+egy Java-ban használt adatszerkezet, amely sor (Queue), de prioritás alapján rendezi az elemeket.
+nem a beszúrás sorrendje számít
+mindig a legkisebb (vagy legnagyobb) prioritású elem kerül előre
+belsőleg halom (heap) struktúrát használ
+Alapértelmezés szerint:
+min-heap → a legkisebb elem jön ki először
+nem enged null elemet
+duplikátumokat enged
+nem garantál teljes rendezett kimenetet, csak a következő elem prioritása biztos
+műveletek: O(log n)
+import java.util.PriorityQueue;public class Main {public static void main(String[] args) {PriorityQueue<Integer> pq = new PriorityQueue<>();        
+pq.add(30);pq.add(10);pq.add(20);System.out.println(pq.poll()); // 10 System.out.println(pq.poll()); // 20  System.out.println(pq.poll()); // 30}}
+A PriorityQueue egy prioritás alapú sor, ahol mindig a legkisebb (vagy megadott szabály szerinti legfontosabb) elem kerül elsőként feldolgozásra, belsőleg heap struktúrát használva.
+
+48. Mi az a LinkedList és hogyan működik?
+egy Java-ban használt lista implementáció, amely láncolt listaként működik, vagyis az elemek nem egy tömbben, hanem egymásra mutató csomópontokban (node-okban) vannak tárolva.
+minden elem egy node
+a node tartalmaz:
+adatot
+hivatkozást a következő elemre (és gyakran az előzőre is → doubly linked list)
+dinamikus méretű
+gyors beszúrás/törlés (főleg elején vagy közepén)
+lassabb indexelés (O(n))
+List és Queue is lehet egyszerre (List, Deque implementáció)
+import java.util.LinkedList;public class Main {public static void main(String[] args) {LinkedList<String> list = new LinkedList<>();list.add("alma");      
+list.add("körte");        list.add("banán");        System.out.println(list.get(1)); // körte        list.remove("alma");        System.out.println(list);    }}
+4. Működési elv egyszerűen:
+[alma] -> [körte] -> [banán]
+Minden elem tudja:
+ki az előző
+ki a következő
+A LinkedList egy láncolt listán alapuló adatszerkezet, ahol az elemek egymásra mutató csomópontokban vannak tárolva. Gyors beszúrást és törlést biztosít, de lassabb az index alapú elérésben, mint az ArrayList.
+
+49. Mi a StringBuilder és mikor használjuk?
+egy Java osztály, amely módosítható (mutable) karakterláncok kezelésére szolgál.
+A String Java-ban immutábilis, azaz nem módosítható. Minden módosítás új objektumot hoz létre, ami lassú lehet sok műveletnél.
+String s = "hello";
+s = s + " world"; // új String jön létre
+ugyanazt az objektumot módosítja, nem hoz létre új Stringeket minden műveletnél, ezért hatékonyabb nagy mennyiségű módosításnál
+Mikor használjuk? sok string összefűzés esetén (pl.ciklusban)
+teljesítménykritikus helyeken
+dinamikus szövegépítésnél
+public class Main {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello");
+        sb.append(" ");
+        sb.append("world");
+        System.out.println(sb.toString()); // Hello world
+Főbb metódusok:
+append() → hozzáfűzés
+insert() → beszúrás
+delete() → törlés
+toString() → Stringé alakítás
+String vs StringBuilder
+Tulajdonság	String	        StringBuilder
+Módosítható	nem	            igen
+Teljesítmény	lassabb          sok műveletnél	gyors
+Használat	fix szöveg	dinamikus szöveg
+A StringBuilder egy módosítható karakterlánc-kezelő osztály, amely hatékonyabb, mint a String, ha sokszor módosítjuk vagy összefűzzük a szöveget.
+
+50. Mi a StringBuffer és mi a különbség a StringBuilder-rel?
+olyan osztályok, amelyek módosítható (mutable) karakterláncokat kezelnek. Ez azt jelenti, hogy a tartalmuk megváltoztatható új objektum létrehozása nélkül (ellentétben a sima String-gel, 
+ami immutable).
+StringBuffer:
+Szinkronizált (thread-safe)
+Több szál (thread) esetén biztonságosan használható
+Lassabb a szinkronizáció miatt
+StringBuffer sb = new StringBuffer("Hello");
+sb.append(" World");
+System.out.println(sb); // Hello World
+StringBuilder:
+Nem szinkronizált
+Nem thread-safe
+Gyorsabb, mert nincs szinkronizáció
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb); // Hello World
+Fő különbség
+Tulajdonság	StringBuffer	        StringBuilder
+Szinkronizáció	Igen (thread-safe)	Nem (nem thread-safe)
+Teljesítmény	Lassabb	Gyorsabb
+Használat	Többszálú környezet	Egyszálú környezet
+Ha többszálú programot írsz → StringBuffer
+Ha egyszálú vagy teljesítménykritikus kódot → StringBuilder
+
+51. Mi a különbség a final, finally és finalize között?
+A final egy kulcsszó, amit változókra, metódusokra és osztályokra használunk.
+Változó esetén: nem módosítható (konstans)
+Metódus esetén: nem lehet felülírni (override)
+Osztály esetén: nem lehet belőle örökölni
+final int x = 10;
+// x = 20; // hiba
+final class A {}
+// class B extends A {} // hiba
+A finally egy blokk a try-catch szerkezetben.
+Mindig lefut (kivéve pl. JVM leállás esetén)
+Általában erőforrások felszabadítására használjuk
+try {
+    int a = 10 / 0;
+} catch (Exception e) {
+    System.out.println("Hiba");
+} finally {
+    System.out.println("Ez mindig lefut");
+A finalize() egy metódus az Object osztályból.
+A garbage collector hívhatja meg, mielőtt az objektumot törli
+Nem garantált, hogy lefut
+Modern Java-ban nem ajánlott használni (deprecated)
+@Override
+protected void finalize() throws Throwable {
+    System.out.println("Objektum törlés előtt");
+Fő különbség röviden
+final	kulcsszó	módosíthatatlanság biztosítása
+finally	blokk	mindig lefutó kódrész
+finalize	metódus	GC előtti művelet (nem ajánlott)
+final → korlátoz (nem módosítható / nem örökölhető)
+finally → mindig lefut
+finalize() → régi, kerülendő GC hook
+
+52. Mi az a HashSet?
+Egy olyan adatszerkezet(Java vagy C# világában), amely egyedi elemek tárolására szolgál
+Nincs duplikáció → ugyanazt az elemet csak egyszer tárolja
+Rendezetlen → az elemek sorrendje nem garantált
+Gyors műveletek → beszúrás, törlés, keresés, átlagosan nagyon gyors (O(1))
+Hash-alapú működés → az elemeket egy úgynevezett hash-kód alapján tárolja
+HashSet<String> nevek = new HashSet<>(); nevek.add("Anna");nevek.add("Béla");nevek.add("Anna"); // nem kerül bele újra
+System.out.println(nevek); // pl. [Béla, Anna]
+Ha fontos, hogy ne legyenek ismétlődő elemek
+Ha gyorsan szeretnénk ellenőrizni, hogy egy elem létezik-e a halmazban
+Ha a sorrend nem számít
+A HashSet egy gyors, duplikációmentes, rendezetlen gyűjtemény, amely hash-elést használ az elemek kezelésére.
+
+53. Mi az a TreeSet?
+olyan halmaz (Set) adatszerkezet, amely egyedi elemeket tárol, de a HashSet-től eltérően rendezett formában
+Nincs duplikáció→ minden elem csak egyszer szerepelhet
+Rendezett→ az elemek automatikusan sorba vannak rendezve (alapból növekvő sorrendben)
+Fa alapú működés→ általában kiegyensúlyozott bináris keresőfát használ (pl. Red-Black Tree)
+Lassabb, mint a HashSet→ műveletek átlagosan O(log n) időben
+TreeSet<Integer> szamok = new TreeSet<>();
+szamok.add(5);
+szamok.add(2);
+szamok.add(8);
+szamok.add(2); // nem kerül bele újra
+System.out.println(szamok); // [2, 5, 8]
+Ha fontos a rendezett sorrend
+Ha szeretnénk pl.: legkisebb / legnagyobb elemet gyorsan lekérni
+tartományokat kezelni (pl. headSet, tailSet)
+HashSet→ gyorsabb, de nem rendezett
+TreeSet→ rendezett, de kicsit lassabb,duplikációmentes halmaz, amely fa alapú struktúrát használ az elemek tárolására.
+
+54. Mi a különbség a Queue és a Deque között?
+A Queue és a (Double-Ended Queue) két rokon adatszerkezet, de eltérnek abban, hogy honnan lehet elemeket hozzáadni és eltávolítani
+Queue (sor): FIFO elv(First In, First Out)
+Az elemek a végére kerülnek be (enqueue) és az elejéről kerülnek ki(dequeue)
+Olyan, mint egy sorban állás: [Első] A → B → C [Utolsó]
+Ha kiveszünk egy elemet → A távozik
+Deque (kétvégű sor)
+Mindkét végén lehet műveleteket végezni
+Lehet: elöl és hátul is beszúrni, elöl és hátul is törölni
+[Első] A ↔ B ↔ C [Utolsó] betehetünk előre vagy hátra
+kivehetünk előről vagy hátulról
+Queue→ csak egy irányból kezelhető(FIFO)
+Deque→ két irányból kezelhető (rugalmasabb)
+A Deque általánosabb struktúra, amely képes úgy működni, mint egy Queue (ha csak az egyik végét használjuk).
+Queue = egyszerű sor (FIFO)
+Deque= kétvégű sor (több műveleti lehetőség)
+
+55. Mi az a Enum típus? 
+Enumerációs típus) egy olyan adattípus, amely előre definiált, véges számú konstans értéket tartalmaz.
+Az Enum segítségével egy változó csak egy meghatározott értékkészletből választhat, így biztonságosabb és átláthatóbb kódot kapunk.
+enum Nap {HETFO, KEDD, SZERDA, CSUTORTOK, PENTEK, SZOMBAT, VASARNAP}
+Nap ma = Nap.HETFO;
+Itt a `ma` változó csak a felsorolt napok egyikét veheti fel
+* Állapotok kezelésére (pl. `AKTIV`, `INAKTIV`)
+* Napok, hónapok
+* Menü opciók
+* Fix kategóriák
+Előnyei:
+*Típusbiztos** → nem lehet tetszőleges értéket adni
+*Olvashatóbb kód** → beszédes nevek
+*Kevesebb hiba** → elkerülhetőek a "magic stringek"
+Az Enum egy **előre definiált értékeket tartalmazó típus**, amely segít strukturáltan és biztonságosan kezelni az állandó kategóriákat.
+
+56. Hogyan működik az Iterator a Java kollekciókban?
+olyan eszköz, amely lehetővé teszi, hogy sorban végigmenjünk egy gyűjtemény elemein anélkül, hogy ismernénk annak belső működését.
+Az Iterator egy objektum, amely „mutat” a kollekció elemeire, és lépésenként halad rajtuk.
+Fő metódusai:
+hasNext()** → van-e még következő elem
+next()** → visszaadja a következő elemet
+remove()** → eltávolítja az aktuális elemet (opcionális)
+import java.util.;
+List<String> lista = new ArrayList<>();
+lista.add("A");
+lista.add("B");
+lista.add("C");
+Iterator<String> it = lista.iterator();
+while(it.hasNext()) {
+    String elem = it.next();
+    System.out.println(elem);
+Egységes bejárás** → ugyanúgy működik minden kollekción (pl. List, Set)
+Biztonságos törlés** → az `Iterator.remove()` használatával elkerülhető a hibás módosítás
+Absztrakció** → nem kell tudni, hogyan tárolja az adatokat a kollekció
+Ha bejárás közben **közvetlenül módosítod a kollekciót** (nem az iteratorral), akkor hibát kapsz (pl. ConcurrentModificationException).
+Az Iterator egy **bejáró eszköz**, amellyel biztonságosan és egységes módon tudsz végigmenni egy kollekció elemein.
+
+57. Mi a különbség az Iterator és a ListIterator között?
+Az **Iterator** és a **ListIterator** közötti különbség főként a **funkcionalitásban és a használhatóságban** rejlik.
+Iterator
+Minden kollekciónál használható (pl. List, Set)
+Csak előre haladásra képes
+Alap műveletek:
+hasNext()
+next()
+remove()
+Egyszerű bejárásra való
+ListIterator
+Csak **listákhoz** használható (pl. ArrayList, LinkedList)
+Kétirányú bejárás**:
+előre: `next()`
+visszafelé: `previous()`
+Extra metódusok:
+hasPrevious()`
+add()` → új elem beszúrása
+set()` → aktuális elem módosítása
+👉 Sokkal rugalmasabb
+Iterator → csak előre irányul
+ListIterator → előre és hátra
+Iterator → csak törlés
+ListIterator → beszúrás, módosítás is
+* Iterator → minden kollekció
+* ListIterator → csak List
+List<String> lista = new ArrayList<>();
+lista.add("A");
+lista.add("B");
+ListIterator<String> it = lista.listIterator();
+while(it.hasNext()) {
+    System.out.println(it.next());
+Iterator** = egyszerű, egyirányú bejárás
+ListIterator** = fejlettebb, kétirányú és módosításra is képes
+
+58. Mi az a Java Reflection API?
+A Java egyik speciális eszköze, amely lehetővé teszi, hogy a program futásidőben (runtime) megvizsgálja és módosítsa az osztályokat, metódusokat, mezőket.
+A Reflection segítségével a program „belenézhet” saját szerkezetébe:
+milyen osztályok vannak
+milyen metódusok és mezők léteznek
+ezeket akár meg is hívhatja vagy módosíthatja futás közben
+Class<?> clazz = Class.forName("java.lang.String");Method[] methods = clazz.getMethods();for (Method m : methods) {System.out.println(m.getName());}
+👉 Ez kilistázza a String osztály metódusait.
+🔹 Mire használják?
+Framework-ökben (pl. dependency injection, ORM)
+Tesztelésnél (pl. privát metódusok elérése)
+Dinamikus objektumkezelésnél
+Annotációk feldolgozásánál
+Nagyon rugalmas és dinamikus
+Nem kell előre ismerni a konkrét osztályt
+Lassabb lehet
+Biztonsági kockázatok (privát elemek elérése)
+Nehezebben olvasható kód
+A Reflection API lehetővé teszi, hogy a Java program futás közben elemezze és manipulálja saját szerkezetét.
+
+59. Mi az a String pool?
+A Java memóriakezelésének egy speciális része, amely a **String objektumok hatékony tárolását** szolgálja.
+A String pool egy olyan memóriaterület, ahol a Java **eltárolja az azonos szövegeket**, hogy ne jöjjenek létre felesleges duplikátumok.
+Ha ugyanaz a String többször szerepel, a JVM **nem hoz létre új objektumot**, hanem a már meglévőt használja.
+String a = "hello";
+String b = "hello";
+System.out.println(a == b); // true
+Itt az `a` és `b` ugyanarra az objektumra mutat a poolban.
+Mi történik new használatakor?
+String a = new String("hello");
+String b = new String("hello");
+System.out.println(a == b); // false
+Itt **külön objektumok jönnek létre** a heapen, nem a poolban.
+Fontos metódus:
+`intern()`
+String a = new String("hello");
+String b = a.intern();
+System.out.println(b == "hello"); // true
+Az `intern()` visszaadja a poolban lévő példányt.
+Memóriahatékony**
+Gyorsabb összehasonlítás** (`==` is működhet)
+String összehasonlításnál általában **.equals()**-t használunk, nem `==`-t
+A String pool egy **speciális tárhely a Java-ban**, ahol az azonos String értékek **megosztva, duplikáció nélkül** kerülnek tárolásra.
+
+60. Mi a különbség a stack memória és a heap memória között Java-ban?
+A stack memória** és a **heap memória** a Java futtatási környezetének két alapvető memóriaterülete, amelyek eltérő szerepet töltenek be.
+Stack memória
+Lokális változók és metódushívások tárolása**
+Minden szálnak (thread) **saját stackje van**
+LIFO elv** (*Last In, First Out*)
+Gyors működés
+Automatikus kezelés (a metódus lefutása után felszabadul)
+void pelda() {
+    int x = 10; // stack-ben tárolódik
+Heap memória
+Objektumok és példányok tárolása**
+Az egész alkalmazás által **közösen használt**
+Lassabb, mint a stack
+A memória felszabadítása a **Garbage Collector** feladata
+String szoveg = new String("Hello"); // heap-ben jön létre
+| Tulajdonság    | Stack               | Heap              |
+| -------------- | ------------------- | ----------------- |
+| Tárolás        | Lokális változók    | Objektumok        |
+| Láthatóság     | Szálanként külön    | Közös             |
+| Sebesség       | Gyors               | Lassabb           |
+| Memóriakezelés | Automatikus (scope) | Garbage Collector |
+| Méret          | Kisebb              | Nagyobb           |
+Hogyan működnek együtt?
+String s = new String("Hi");
+`s` referencia → **stack-ben**
+"Hi"` objektum → **heap-ben**
+Stack** → gyors, ideiglenes adatok (változók, hívások)
+Heap** → objektumok tárolása, hosszabb élettartam
+Együtt biztosítják a Java programok hatékony memóriakezelését.
+
+61. Mi a különbség a javac és a java parancsok között a Java fejlesztésben?
+két alapvető parancs a Java fejlesztésben, de teljesen más szerepük van.
+javac (Java Compiler)
+A **fordító (compiler)**
+A `.java` forráskódot **bytecode-dá fordítja**
+Eredmény: `.class` fájlok
+Csak fordít, nem futtat
+```bash
+javac Hello.java
+👉 Ebből lesz: Hello.class
+java (Java Launcher)
+A **futtató program**
+A `.class` bytecode-ot **a Java Virtual Machine (JVM)** segítségével futtatja
+Nem fordít, csak végrehajt
+```bash
+java Hello
+Ez elindítja a programot
+| Tulajdonság   | javac               | java           |
+| ------------- | ------------------- | -------------- |
+| Szerep        | Fordítás            | Futtatás       |
+| Bemenet       | `.java` fájl        | `.class` fájl  |
+| Kimenet       | Bytecode (`.class`) | Program futása |
+| JVM használat | Nem                 | Igen           |
+Egyszerű folyamat:
+Írsz kódot: `Hello.java`
+Fordítás:
+   ```bash
+   javac Hello.java
+   ```
+Futtatás:
+   ```bash
+   java Hello
+javac** → lefordítja a Java kódot bytecode-ra
+java** → lefuttatja a bytecode-ot a JVM-ben
+Egyik fordít, a másik végrehajt.
+
+IV.Spring Web
+
+62. Mi a cookie és mire használjuk? Mi az a session?
+két gyakran használt technika a webfejlesztésben (pl. Java webalkalmazásokban is), amelyek arra szolgálnak, hogy információt tartsanak fenn a felhasználóról
+a HTTP kérések között.
+A **cookie** egy **kicsi szöveges adat**, amit a weboldal a felhasználó böngészőjében tárol.
+Minden kérésnél elküldésre kerül a szervernek
+Lejárati ideje lehet (pl. 1 nap, 1 hónap)
+Kis méretű (pár KB)
+* Bejelentkezés megjegyzése
+* Nyelvi beállítások
+* Felhasználói preferenciák
+* Követés (pl. analitika)
+* „Maradj bejelentkezve” funkció
+A **session** egy **szerveroldali felhasználói munkamenet**, amely ideiglenesen tárol adatokat a felhasználóról.
+A **szerveren tárolódik**
+* Biztonságosabb, mint a cookie
+* Általában egyedi session ID azonosítja
+* Idővel lejár (inaktivitás után)
+* Bejelentkezett felhasználó kezelése
+* Kosár tartalmának tárolása webáruházban
+* Ideiglenes adatok kezelése
+| Tulajdonság | Cookie              | Session                |
+| ----------- | ------------------- | ---------------------- |
+| Tárolás     | Böngészőben         | Szerveren              |
+| Biztonság   | Kevésbé biztonságos | Biztonságosabb         |
+| Méret       | Kicsi               | Nagyobb lehet          |
+| Élettartam  | Hosszabb is lehet   | Általában rövid        |
+| Azonosítás  | Közvetlenül tárolja | Session ID-val működik |
+* A szerver létrehoz egy **sessiont**
+* A böngésző kap egy **session ID cookie-t**
+* A cookie „kulcsként” azonosítja a sessiont a szerveren
+* **Cookie** → böngészőben tárolt kis adat
+* **Session** → szerveren tárolt felhasználói munkamenet
+Együtt biztosítják, hogy a weboldal „emlékezzen” rád a kérések között.
+
+63. Milyen HTTP methodokkal dolgoztál és hogyan használtad őket?
+A HTTP metódusok a webes kommunikáció „műveletei”, amelyek megmondják, hogy a kliens mit szeretne csinálni egy szerver erőforrásával.
+A leggyakrabban használtak a REST API-kban is jelen vannak (pl. REST API).
+ GET
+* **Adatok lekérdezése**
+* Nem módosít semmit a szerveren
+* Cache-elhető
+* Felhasználók listázása
+* Egy termék adatainak lekérése
+GET /users
+GET /products/5
+ POST
+* **Új erőforrás létrehozása**
+* Adatot küld a szervernek
+* Regisztráció
+* Új termék felvétele
+POST /users
+Body: { "name": "Anna" }
+PUT
+* **Teljes erőforrás frissítése**
+* A meglévőt teljesen felülírja
+* Felhasználó adatainak teljes módosítása
+PUT /users/5
+Body: { "name": "Béla", "age": 30 }
+PATCH
+* Részleges módosítás**
+* Csak bizonyos mezők változnak
+* E-mail cím módosítása
+PATCH /users/5
+Body: { "email": "uj@mail.com" }
+DELETE
+**Erőforrás törlése**
+* Felhasználó törlése
+DELETE /users/5
+Gyakorlati használat (tipikus backendben):
+* **GET** → adatok lekérése frontend számára
+* **POST** → új rekord létrehozása adatbázisban
+* **PUT/PATCH** → adatok frissítése
+* **DELETE** → rekord eltávolítása
+* **GET** → lekér
+* **POST** → létrehoz
+* **PUT** → teljesen frissít
+* **PATCH** → részlegesen frissít
+* **DELETE** → töröl
+Ezek együtt alkotják a modern webes API-k alapműködését.
+
+64. Mi az az Inversion of Control?
+Az (IoC) egy szoftvertervezési elv, amely azt jelenti, hogy **a program vezérlését nem a saját kódunk irányítja teljesen, hanem egy külső keretrendszer (framework)**.
+Normál esetben a kódod „maga hívja meg” a szükséges objektumokat és függőségeket.
+IoC esetén viszont: a framework hozza létre és adja oda az objektumokat neked**
+Hagyományos megközelítés:
+Service service = new Service();
+Controller controller = new Controller(service);
+Te hozod létre és kezeled a függőségeket.
+IoC megközelítés: A framework (pl. Spring Framework) csinálja:
+@Autowired
+Service service;
+A Spring „beinjectálja” a Service-t.
+Az IoC leggyakoribb formája a **Dependency Injection (DI)**.
+* **Lazább kapcsolatok (loose coupling)**
+* **Könnyebb tesztelhetőség**
+* **Jobb karbantarthatóság**
+* **Rugalmasabb architektúra**
+* Spring (Java)
+* .NET Core
+* Angular
+* sok modern framework
+Az Inversion of Control azt jelenti, hogy **nem te irányítod közvetlenül az objektumok létrehozását és kezelését, hanem egy framework veszi át ezt a feladatot**.
+
+65. Milyen injection típusok vannak?
+Az **Dependency Injection** (DI) az **Inversion of Control** egyik megvalósítása, ahol az objektumok függőségeit kívülről kapják meg.
+A DI-nak több típusa van a Java és más OOP nyelvek világában.
+Constructor Injection (konstruktoros injekció)
+* A függőségeket a **konstruktoron keresztül kapja az osztály**
+* Ez a **leggyakrabban ajánlott** módszer
+class Service {
+class Controller {
+    private final Service service;
+    public Controller(Service service) {
+        this.service = service;
+* kötelező függőségek biztosak
+* immutable (final mezők)
+* tesztelhető
+Setter Injection (setteres injekció)
+* A függőséget **setter metódussal adjuk át**
+class Controller {
+    private Service service;
+    public void setService(Service service) {
+        this.service = service;
+* opcionális függőségekhez jó
+* később is beállítható
+* az objektum ideiglenesen „félkész” állapotban lehet
+Field Injection (mező injekció)
+* A függőség **közvetlenül a mezőre kerül**
+* Gyakori pl. Springben
+class Controller {
+    @Autowired
+    private Service service;
+* nagyon egyszerű használat
+* nehezebb tesztelni
+* rejtett függőségek
+* erősen framework-függő
+| Típus                 | Jellemző                | Ajánlás                      |
+| --------------------- | ----------------------- | ---------------------------- |
+| Constructor Injection | Konstruktoron keresztül | ⭐ Legjobb                    |
+| Setter Injection      | Setter metódussal       | Opcionális függőségekhez     |
+| Field Injection       | Közvetlen mező          | Kényelmes, de kevésbé tiszta |
+A dependency injection típusai:
+* **konstruktoros**
+* **setteres**
+* **mező (field) injekció**
+A legjobb gyakorlat általában a **constructor injection**.
+
+66. Hogyan tudunk bean-t létrehozni?
+A **Spring Framework**-ben egy **bean** olyan objektum, amelyet a **Spring IoC konténer** hoz létre, kezel és injektál.
+Annotation alapú létrehozás (leggyakoribb)
+@Component
+public class Service {}
+A Spring automatikusan felismeri és bean-né teszi.
+Speciális sztereotípiák:
+* `@Service` → üzleti logika
+* `@Repository` → adatbázis réteg
+* `@Controller` → web réteg
+@Service
+public class UserService {
+@Bean annotáció (konfigurációs osztályban)
+@Configuration
+public class AppConfig {
+    @Bean
+    public Service service() {
+        return new Service();
+Itt **kézzel hozod létre** a bean-t.
+XML alapú konfiguráció (régebbi megoldás)
+```xml id="xml1"
+<bean id="service" class="com.example.Service"/>
+Ma már ritkán használják, de régi projektekben előfordul.
+| Módszer    | Jellemző                      |
+| ---------- | ----------------------------- |
+| @Component | Automatikus felismerés (scan) |
+| @Bean      | Manuális létrehozás           |
+| XML        | Régi konfigurációs mód        |
+* Spring induláskor **beolvassa az osztályokat**
+* Létrehozza a bean példányokat
+* Kezeli az életciklust és dependency injection-t
+Bean-t Springben így hozhatunk létre:
+* **@Component / @Service / @Repository / @Controller** (automatikus)
+* **@Bean** (manuális konfigurációban)
+* (régebben) **XML konfigurációval**
+A modern Spring projektekben az annotation alapú megoldás a standard.
+
+67. A 3 rétegű alkalmazásnak milyen rétegei vannak és miket csinálnak?
+A **háromrétegű architektúra** (3-tier architecture) egy gyakran használt felépítés a Java alapú webalkalmazásokban is, például a Spring Framework projektekben.
+Presentation Layer (Prezentációs réteg)
+Felhasználói felület réteg
+* Felhasználói kérések fogadása
+* Válaszok megjelenítése
+* HTTP kérések kezelése
+* Controller-ek (Springben)
+* REST API végpontok
+* Web UI (HTML, JSON)
+@RestController
+class UserController {
+Business Logic Layer (Üzleti logika réteg)
+Szabályok és logika rétege”
+* Üzleti szabályok végrehajtása
+* Adatok feldolgozása
+* Számítások, validációk
+* Service osztályok
+@Service
+class UserService {
+Data Access Layer (Adat hozzáférési réteg)
+Adatbázis réteg” Feladata:
+* Adatok mentése és lekérdezése
+* Kommunikáció az adatbázissal
+* CRUD műveletek 
+* Repository-k (Spring Data JPA)
+@Repository
+interface UserRepository extends JpaRepository<User, Long> {
+| Réteg          | Feladata              | Példa      |
+| -------------- | --------------------- | ---------- |
+| Presentation   | Kérés/válasz kezelése | Controller |
+| Business Logic | Üzleti szabályok      | Service    |
+| Data Access    | Adatbázis műveletek   | Repository |
+Felhasználó → Controller (Presentation)
+ontroller → Service (Business Logic)
+Service → Repository (Data Access)
+Visszafelé jön az eredmény
+A 3 réteg:
+Presentation** → kommunikáció a felhasználóval
+Business Logic** → az alkalmazás logikája
+Data Access** → adatbázis műveletek
+Ez a felépítés segít a kód **átláthatóságában, tesztelhetőségében és karbantarthatóságában
+
+68. Mik a CRUD műveletek?
+A négy alapvető adatkezelési művelet rövidítése, amelyeket adatbázisoknál és webalkalmazásoknál használnak:
+| Betű | Jelentés | Magyarul              | Példa                               |
+| ---- | -------- | --------------------- | ----------------------------------- |
+| C    | Create   | Létrehozás            | Új felhasználó hozzáadása           |
+| R    | Read     | Lekérdezés / Olvasás  | Felhasználó adatainak megjelenítése |
+| U    | Update   | Frissítés / Módosítás | Email cím módosítása                |
+| D    | Delete   | Törlés                | Felhasználó törlése                 |
+Egyszerű „felhasználók” táblára:
+```text
+id | nev     | email
+1  | Anna    | anna@email.hu
+2  | Béla    | bela@email.hu
+```
+CRUD műveletek SQL-ben
+Create
+INSERT INTO felhasznalok (nev, email)
+VALUES ('Kata', 'kata@email.hu');
+Read
+SELECT * FROM felhasznalok;
+Update
+UPDATE felhasznalok
+SET email = 'uj@email.hu'
+WHERE id = 1;
+Delete
+DELETE FROM felhasznalok
+WHERE id = 2;
+Webfejlesztésben a CRUD gyakran HTTP metódusokhoz kapcsolódik:
+| CRUD   | HTTP        |
+| ------ | ----------- |
+| Create | POST        |
+| Read   | GET         |
+| Update | PUT / PATCH |
+| Delete | DELETE      |
+
+V. Spring Boot
+
+69. Hogyan használjuk a @RestController annotációt a Spring Boot alkalmazásokban, és mi a különbsége a @Controller-ral?
+A **Spring Boot** alkalmazásokban a **@RestController** és a **@Controller** annotációk a webes réteg (presentation layer) részei, de más célt szolgálnak.
+@Controller, a klasszikus Spring Model View Controller(MVC) vezérlő.
+HTML oldalak visszaadására (view-k)
+JavaServer Pages JSP/Thymeleaf sablonokkal dolgozik
+@Controller
+public class HomeController {
+    @GetMapping("/home")
+    public String home() {
+        return "home"; // view név (pl. home.html)
+Itt a visszatérési érték egy **nézet neve**, nem JSON.
+A `@RestController` a REST API-khoz használt változat.
+Valójában ez: @Controller + @ResponseBody
+JSON/XML válaszok küldésére
+REST API-k készítésére
+@RestController
+public class UserController {
+    @GetMapping("/users")
+    public List<String> getUsers() {
+        return List.of("Anna", "Béla");
+Itt a visszatérés **automatikusan JSON-ná alakul**
+| Tulajdonság   | @Controller        | @RestController |
+| ------------- | ------------------ | --------------- |
+| Cél           | Web oldalak (view) | REST API        |
+| Visszatérés   | HTML / view név    | JSON / objektum |
+| @ResponseBody | külön kell         | automatikus     |
+| Használat     | MVC alkalmazás     | REST backend    |
+Hogyan működik @RestController?
+* A Spring automatikusan JSON-ra konvertálja az objektumokat
+* A Jackson library-t használja a háttérben
+* **@Controller** → HTML oldalakat szolgál ki
+***@RestController** → JSON API válaszokat ad
+REST API fejlesztéshez szinte mindig a **@RestController** a megfelelő választás.
+
+70. Mi a különbség a @RequestParam és a @PathVariable annotációk között a Spring Boot-ban?
+két különböző módja annak, hogy adatot vegyünk át HTTP kérésből egy controllerben.
+@PathVariable
+Az URL útvonalából (path-ból) veszi az értéket
+* konkrét erőforrás azonosítására
+* RESTful URL-eknél
+@GetMapping("/users/{id}")
+public String getUser(@PathVariable Long id) {
+    return "User id: " + id;
+Hívás: /users/5
+Az `id = 5` az URL része
+@RequestParam
+Az URL query paraméteréből veszi az értéket
+* szűrés, keresés, opcionális paraméterek
+@GetMapping("/users")
+public String getUser(@RequestParam String name) {
+    return "Name: " + name;
+Hívás: /users?name=Anna
+A `name = Anna` query paraméterből jön
+| Tulajdonság | @PathVariable        | @RequestParam    |
+| ----------- | -------------------- | ---------------- |
+| Hely        | URL path             | Query string     |
+| Példa URL   | /users/5             | /users?name=Anna |
+| Használat   | erőforrás azonosítás | szűrés, keresés  |
+| Kötelezőség | általában kötelező   | lehet opcionális |
+* **PathVariable** → „melyik objektum?”
+* **RequestParam** → „milyen feltételekkel?”
+* **@PathVariable** → URL része (pl. /users/1)
+* **@RequestParam** → URL paraméter (pl. ?name=Anna)
+REST API-ban a kettő együtt gyakran használatos: azonosítás + szűrés kombinációjára.
+
+71. Mi az a @Service annotáció, és milyen szerepe van a Spring alkalmazásokban? 
+A **Spring Framework**-ben a **@Service** egy sztereotípia annotáció, amely azt jelzi, hogy az adott osztály a **business logic (üzleti logika) réteghez** tartozik.
+A `@Service`-sel jelölt osztály:
+* **üzleti műveleteket hajt végre**
+* feldolgozza az adatokat
+* összeköti a controller réteget a repository réteggel
+* a Spring automatikusan **bean-ként kezeli**
+@Service
+public class UserService {
+    public String getUserName(Long id) {
+        return "Anna";
+Hogyan kapcsolódik más rétegekhez? Tipikus 3 rétegű architektúrában:
+* **Controller** → fogadja a kérést
+* **Service (@Service)** → feldolgozza a logikát
+* **Repository** → adatbázist kezeli
+@RestController
+public class UserController {
+    private final UserService service;
+    public UserController(UserService service) {
+        this.service = service;
+Miért nem csak @Component?
+A `@Service` valójában egy speciális: @Component**
+Funkcionálisan ugyan bean-t hoz létre, de: szemantikai jelentése van**
+jelzi, hogy ez üzleti logika
+* tiszta rétegződés (clear architecture)
+* könnyebb karbantarthatóság
+* jobb olvashatóság
+* Spring automatikusan kezeli bean-ként
+A `@Service` egy Spring annotáció, amely:
+* az **üzleti logika rétegét jelöli**
+* automatikusan bean-né teszi az osztályt
+* segít a kód strukturálásában és átláthatóságában
+
+72. Mi a szerepe az application.yaml fájlnak a Spring Boot alkalmazásokban, és hogyan konfigurálhatjuk vele az alkalmazást?
+Az application.yml egy központi konfigurációs fájl, amelyben az alkalmazás **beállításait strukturált formában** tudjuk megadni.
+* az alkalmazás **konfigurációját tárolja**
+* helyettesíti a régi `.properties` fájlokat
+* **hierarchikus (strukturált) formátumot** használ
+* Spring Boot induláskor automatikusan beolvassa
+Szerver beállítások
+server:
+  port: 8081
+Adatbázis konfiguráció
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/app
+    username: root
+    password: secret
+JPA beállítások
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+Saját (custom) konfiguráció
+app:
+  name: MyApplication
+  version: 1.0
+Ezeket később Java kódból is elérhetjük.
+| YAML (`.yaml`) | Properties (`.properties`) |
+| -------------- | -------------------------- |
+| Strukturált    | Kulcs-érték                |
+| Olvashatóbb    | Egyszerűbb                 |
+| Hierarchikus   | Lapított                   |
+## 🔹 Hogyan használjuk Java-ban?
+@Value("${app.name}")
+private String appName;
+vagy:
+@ConfigurationProperties(prefix = "app")
+public class AppConfig {
+    private String name;
+* központosított konfiguráció
+* környezetenként könnyen módosítható (dev, prod)
+* nem kell kódot módosítani beállításokhoz
+Az `application.yaml` a Spring Boot **központi konfigurációs fájlja**, amelyben:
+* szerver-, adatbázis- és alkalmazásbeállításokat adunk meg
+* strukturált, könnyen olvasható YAML formátumot használ
+* a Spring automatikusan beolvassa induláskor
+
+73. Mi az a @ResponseBody annotáció, és hogyan használjuk a válasz testreszabására egy REST API-ban a Spring Boot használatával?
+A **@ResponseBody** a Spring Boot (és Spring MVC) egyik fontos annotációja, amely azt mondja meg, hogy a metódus visszatérési értéke **közvetlenül a HTTP válasz törzsébe (body)** kerüljön,
+ne pedig egy nézet (view) neve legyen.
+Alapból egy **@Controller** esetén:
+* a visszatérési érték → **nézetnév (pl. HTML oldal)**
+Ha viszont használjuk a `@ResponseBody`-t:
+* a visszatérési érték → **JSON / XML formában a kliensnek megy vissza**
+@Controller
+public class UserController {
+    @GetMapping("/user")
+    @ResponseBody
+    public String getUser() {
+        return "Hello User";
+A válasz: Hello User
+Objektum visszaadása (JSON)
+@GetMapping("/user")
+@ResponseBody
+public User getUser() {
+    return new User("Anna", 25);
+A Spring automatikusan JSON-ra alakítja:
+{"name": "Anna",
+  "age": 25
+* A Spring egy ún. **HTTP message convertert** használ (pl. Jackson) → Java objektum → JSON
+Kapcsolat a @RestController-rel
+A **@RestController** valójában: @Controller + @ResponseBody
+Ezért REST API-kban általában nem kell külön kiírni a `@ResponseBody`-t.
+Mikor használjuk?
+* REST API-knál
+* amikor **adatot (JSON/XML)** akarunk visszaadni, nem HTML oldalt
+* **@ResponseBody** → a visszatérési érték a HTTP válasz törzsébe kerül
+* JSON/XML választ készít
+* REST API-knál alapvető
+Gyakorlatban sokszor a **@RestController** kiváltja.
+
+74. Hogyan tudnál adatot küldeni a szervernek HTTP segítségével? (url, header, body)
+HTTP-n keresztül többféleképpen tudunk adatot küldeni a szervernek, attól függően, hogy **hol helyezzük el az adatot a kérésben**. Ez a működés alapja például egy REST API kommunikációnak.
+URL-ben (path vagy query paraméter)
+Path paraméter (URL része)
+GET /users/5
+itt az `5` az adat
+Query paraméter
+GET /users?name=Anna&age=25
+kulcs-érték párok az URL végén
+* lekérdezésekhez
+* szűréshez
+* kisebb adatoknál
+Header-ben
+A HTTP header-ek metaadatokat tartalmaznak.
+GET /users
+Authorization: Bearer token123
+Content-Type: application/json
+* autentikáció (pl. token)
+* tartalomtípus megadása
+* kliens információk
+A request body-ban **nagyobb vagy strukturált adatokat** küldünk.
+POST /users
+Content-Type: application/json
+  "name": "Anna",
+  "age": 25
+* új adat létrehozásakor (POST)
+* frissítésnél (PUT, PATCH)
+* komplex objektumoknál
+| Hely   | Mire jó         | Példa               |
+| ------ | --------------- | ------------------- |
+| URL    | egyszerű adatok | /users?name=Anna    |
+| Header | metaadat        | Authorization token |
+| Body   | komplex adatok  | JSON objektum       |
+Gyakorlatban (Spring Boot):
+* URL → `@PathVariable`, `@RequestParam`
+* Header → `@RequestHeader`
+* Body → `@RequestBody`
+Adatot HTTP-n keresztül így küldünk:
+* **URL-ben** → azonosítás, szűrés
+* **Header-ben** → metaadat (pl. auth)
+* **Body-ban** → tényleges adat (pl. JSON)
+A választás attól függ, milyen típusú adatot és milyen célból küldünk.
+
+75. Mik a státusz kódok főbb típusai, és mire használják őket?
+A HTTP **státuszkódok** a szerver válaszának rövid, szabványos jelzései, amelyek megmondják, hogy a kérés **sikeres volt-e, vagy milyen hiba történt**. 
+Ezek alapvető részei minden HTTP kommunikációnak és REST API működésnek.
+Főbb státuszkód kategóriák
+A kódok első számjegye jelzi a típust:
+1xx – Információs
+A kérés feldolgozása folyamatban van
+Ritkán használjuk a gyakorlatban
+2xx – Sikeres
+A kérés sikeresen teljesült
+200 OK** → sikeres lekérdezés
+201 Created** → új erőforrás létrejött
+204 No Content** → sikeres, de nincs válasz tartalom
+3xx – Átirányítás
+A kliensnek máshová kell mennie
+301 Moved Permanently** → végleges átirányítás
+302 Found** → ideiglenes átirányítás
+4xx – Kliens hiba
+👉 A hiba a kliens kérésében van
+400 Bad Request** → hibás kérés
+401 Unauthorized** → nincs hitelesítés
+403 Forbidden** → nincs jogosultság
+04 Not Found** → nem található erőforrás
+5xx – Szerver hiba
+A hiba a szerver oldalán van
+500 Internal Server Error** → általános hiba
+502 Bad Gateway**
+503 Service Unavailable** → szolgáltatás nem elérhető
+Mire használjuk?
+* kliens és szerver közötti kommunikáció jelzésére
+* hibakezelésre
+* API-k viselkedésének szabályozására
+* frontend döntésekhez (pl. hibaüzenet megjelenítés)
+GET /users/5
+200 OK
+GET /users/999
+404 Not Found
+* **1xx** → információ
+* **2xx** → siker
+* **3xx** → átirányítás
+* **4xx** → kliens hiba
+* **5xx** → szerver hiba
+A státuszkódok segítenek gyorsan megérteni, mi történt a kérés során.
+
+76. Mik a Spring framework alapszolgáltatásai? Milyen Spring modulokkal (kiegészítőkkel/eszközökkel) találkoztál már(security, data, mvc)?
+A **Spring Framework** egy átfogó keretrendszer, amely sok alapszolgáltatást és modult biztosít a modern Java alkalmazások fejlesztéséhez.
+A Spring alapszolgáltatásai: 5
+Inversion of Control (IoC) és Dependency Injection (DI)
+* Objektumok életciklusának kezelése
+* Függőségek automatikus injektálása
+lazább kapcsolatok, jobb tesztelhetőség
+AOP (Aspect-Oriented Programming)
+* Keresztmetszeti funkciók kezelése (pl. logging, security)
+nem kell mindenhol külön megírni
+Transaction Management
+* Adatbázis tranzakciók kezelése
+* Automatikus rollback hibánál
+MVC Támogatás
+* Web alkalmazások fejlesztése
+* Controller–Service–Repository minta
+lásd: Spring MVC
+Integráció és konfiguráció
+* Könnyű integráció más technológiákkal
+* Annotation alapú konfiguráció
+Gyakori Spring modulok: 6
+Spring MVC
+* Web réteg kezelése
+* REST API-k készítése
+* Controller-ek, request mapping
+Spring Security
+* Hitelesítés (authentication)
+* Jogosultságkezelés (authorization)
+* JWT, OAuth2 támogatás
+Spring Data
+* Adatbázis kezelés egyszerűsítése
+* JPA, CRUD repository-k
+* Kevesebb boilerplate kód
+Spring Boot
+* Gyors alkalmazásindítás
+* Auto-configuration
+* Beépített szerver (Tomcat)
+Spring AOP
+* Logging, security, tranzakciók külön kezelése
+Spring Core
+* IoC container
+* Bean kezelés
+Alapszolgáltatások:
+* IoC / DI
+* AOP
+* tranzakciókezelés
+* MVC támogatás
+Gyakori modulok:
+* Spring MVC
+* Spring Security
+* Spring Data
+* Spring Boot
+A Spring célja, hogy **modulárisan, rugalmasan és könnyen tesztelhetően** lehessen komplex alkalmazásokat építeni.
+
+77. Mit jelentenek a 3-mal kezdődő HTTP státusz kódok? Mi történik ha egy ilyen választ kap a browser a szervertől? 
+A HTTP válaszok **átirányítást (redirection)** jelentik: kért erőforrás **nem azon az URL-en érhető el**, ahol a kliens kereste, hanem máshol.
+A szerver azt mondja: „Az erőforrás máshol van, menj oda!”
+Gyakoribb 3xx kódok:
+* **301 Moved Permanently**→ végleges áthelyezés (SEO szempontból is fontos)
+* **302 Found**→ ideiglenes átirányítás
+* **303 See Other**→ másik URL-en kell lekérni (pl. POST után GET)
+* **304 Not Modified**→ nincs változás (cache használható)
+* **307 Temporary Redirect**→ ideiglenes, metódus megmarad
+Mi történik a böngészőben ha a browser egy 3xx választ kap:
+Megnézi a válasz **Location headerét**
+Automatikusan új kérést küld az új URL-re
+A felhasználó ezt általában **nem is veszi észre*
+GET /old-page→ 301 Moved Permanently
+Location: /new-page
+A böngésző automatikusan:
+GET /new-page
+Különleges eset – 304:
+* Nem történik új letöltés
+* A böngésző a **cache-ben lévő verziót használja**
+* **3xx kódok = átirányítás**
+* A szerver új URL-t ad meg
+* A böngésző automatikusan követi ezt
+A felhasználó legtöbbször csak annyit lát: „betöltött az oldal”, de a háttérben átirányítás történt.
+
+78. Mi a Java annotáció (annotation)?
+egy speciális jelölés, amellyel metaadatot adunk osztályokhoz, metódusokhoz, változókhoz stb.
+Az annotáció nem közvetlenül a program logikáját írja le, hanem információt ad a fordítónak vagy frameworköknek 
+(pl.[Spring Framework](https://spring.io/projects/spring-framework
+Annotáció szintaxis
+@Override
+public String toString() {
+    return "Hello";
+Fordító informálása
+@Override
+Jelzi, hogy egy metódust felülírunk.
+Framework konfiguráció
+Spring példák:
+@Controller
+@Service
+@Repository
+Dependency Injection
+@Autowired
+private UserService userService;
+Gyakori Java annotációk
+| Annotáció           | Jelentés          |
+| ------------------- | ----------------- |
+| `@Override`         | metódus felülírás |
+| `@Deprecated`       | elavult elem      |
+| `@SuppressWarnings` | warning elrejtése |
+@Override
+class Animal {
+    void sound() {
+class Dog extends Animal {
+@Override
+    void sound() {
+        System.out.println("Woof");
+@Deprecated
+public void oldMethod() {
+Spring annotációk
+@RestController
+public class UserController {
+Request mapping
+@GetMapping("/users")
+@Service
+public class UserService {
+Saját annotáció készítése
+@interface MyAnnotation {
+    String value();
+@MyAnnotation(value = "Teszt")
+class Demo {
+Annotációkat lehet használni:
+| Hely        | Példa          |
+| ----------- | -------------- |
+| osztályon   | `@Controller`  |
+| metóduson   | `@Override`    |
+| mezőn       | `@Autowired`   |
+| paraméteren | `@RequestBody` |
+Retention policy: Megadja, meddig él az annotáció.
+| Típus   | Jelentés         |
+| ------- | ---------------- |
+| SOURCE  | csak fordításig  |
+| CLASS   | `.class` fájlban |
+| RUNTIME | futás közben is  |
+@Retention(RetentionPolicy.RUNTIME)
+Az annotáció:
+* nem komment
+* nem változó
+* metaadat
+* gyakran reflectionnel olvassák ki
+Egyszerű Spring példa
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    @GetMapping
+    public String getUsers() {
+        return "Users";
+@RestController` → REST controller
+* `@RequestMapping` → alap URL
+* `@GetMapping` → GET kérés kezelése
+
+79. Mi az a @ControllerAdvice ? 
+A Spring Framework egyik speciális annotációja, amely lehetővé teszi, hogy **globálisan kezeljük a controller-ekhez tartozó viselkedéseket**,leggyakrabban a hibakezelést.
+A `@ControllerAdvice` segítségével:
+* **globális exception handlinget** valósíthatunk meg
+* közös logikát adhatunk több controllerhez
+* egységes válaszokat küldhetünk hibák esetén
+eggyakoribb használat: Exception kezelés
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity
+                .status(500)
+                .body("Hiba történt: " + ex.getMessage());
+Ez az összes controllerben elkapja a kivételeket
+Ha egy controllerben hiba történik:
+@GetMapping("/test")
+public String test() {
+    throw new RuntimeException("Hiba!");
+Nem omlik össze az app, hanem:
+* a `@ControllerAdvice` kezeli
+* egységes választ ad vissza
+Kapcsolódó annotációk:
+* `@ExceptionHandler` → konkrét hibák kezelése
+* `@ResponseBody` → JSON válasz (ha REST API)
+* `@RestControllerAdvice` → shortcut (ControllerAdvice + ResponseBody)
+A **@RestControllerAdvice** gyakran használt REST API-knál
+* központosított hibakezelés
+* tisztább controller kód
+* egységes API válaszok
+* könnyebb karbantartás
+A `@ControllerAdvice` egy Spring eszköz, amellyel:
+* **globálisan kezelhetjük a hibákat és controller viselkedést**
+* elkerülhetjük az ismétlődő kódot
+* egységes válaszokat adhatunk az alkalmazásban
+REST API-kban szinte mindig használják globális exception handlingre.
+
+80. Mit értünk REST API alatt? 
+A **REST API** egy olyan webes API, amely a **REST (Representational State Transfer)** architektúrális elveit követi, és HTTP-n keresztül teszi lehetővé az adatok elérését és kezelését.
+A REST API egy mód arra, hogy a kliens (pl. frontend) és a szerver **HTTP kéréseken keresztül kommunikáljon**.
+Erőforrás-alapú
+* Minden adat egy **resource (erőforrás)**
+* URL-ekkel azonosítjuk
+/users
+/users/5
+HTTP metódusok használata
+* **GET** → lekérdezés
+* **POST** → létrehozás
+* **PUT / PATCH** → módosítás
+* **DELETE** → törlés
+Stateless (állapotmentes)
+* Minden kérés **független**
+* A szerver nem tárol kliens állapotot
+Egységes interfész
+* Szabványos HTTP használat
+* kiszámítható működés
+Reprezentációk
+* Az adatokat általában **JSON** formátumban küldjük
+GET /users/5
+→ 200 OK
+  "id": 5,
+  "name": "Anna"
+* Web alkalmazások (frontend ↔ backend)
+* Mobil appok
+* Microservice-ek közötti kommunikáció
+* egyszerű és jól skálázható
+* platformfüggetlen
+* könnyen tesztelhető
+* széles körben támogatott
+A REST API egy **HTTP-alapú kommunikációs szabvány**, ahol:
+* URL-ek → erőforrások
+* HTTP metódusok → műveletek
+* JSON → adatcsere
+Ez a modern webes alkalmazások egyik legfontosabb alapja.
+
+81. Mi a különbség az autentikáció és az autorizáció között?
+két alapvető biztonsági fogalom, gyakran együtt használjuk őket pl. Spring Security alapú rendszerekben, de **nem ugyanazt jelentik**.
+Autentikáció (Authentication)
+👉 „Ki vagy?”
+* A felhasználó **azonosítása**
+* Annak ellenőrzése, hogy valóban az-e, akinek mondja magát
+* felhasználónév + jelszó
+* biometrikus azonosítás
+* token (pl. JWT)
+Eredmény: **a rendszer tudja, hogy ki vagy**
+Autorizáció (Authorization)
+ „Mit tehetsz meg?”
+* Jogosultságok ellenőrzése
+* Meghatározza, hogy egy felhasználó **milyen erőforrásokhoz férhet hozzá**
+* admin → mindenhez hozzáfér
+* user → csak saját adataihoz
+Eredmény: **mit csinálhatsz a rendszerben**
+## 🔑 Fő különbség:
+| Fogalom      | Kérdés       | Jelentés    |
+| ------------ | ------------ | ----------- |
+| Autentikáció | Ki vagy?     | Azonosítás  |
+| Autorizáció  | Mit tehetsz? | Jogosultság |
+Hogyan működnek együtt?
+1. **Autentikáció** → bejelentkezés
+2. **Autorizáció** → hozzáférés ellenőrzése
+Nem tudsz jogosultságot kapni, ha előtte nem azonosítottad magad.
+* **Autentikáció** = azonosítás
+* **Autorizáció** = jogosultságkezelés
+👉 „Ki vagy?” vs „Mit tehetsz?”
+
+V.SQL
+
+82. Mit jelent a DDL és a DML? Mik tartoznak ezekbe?
+az SQL két alapvető parancscsoportja, amelyek különböző feladatokra szolgálnak az adatbázis-kezelésben.
+DDL (Data Definition Language) „Adatszerkezet definiálása”
+* adatbázis **struktúrájának létrehozása és módosítása**
+### Ide tartozó parancsok:
+* **CREATE** → tábla létrehozása
+* **ALTER** → tábla módosítása
+* **DROP** → tábla törlése
+* **TRUNCATE** → tábla kiürítése
+CREATE TABLE users (
+    id INT,
+    name VARCHAR(100)
+Itt a struktúrát hozod létre, nem az adatot kezeled.
+DML (Data Manipulation Language)
+👉 „Adatok kezelése”
+### Mire használjuk? * az adatbázisban lévő **adatok módosítása**
+### Ide tartozó parancsok:
+* **INSERT** → adat beszúrása
+* **UPDATE** → adat módosítása
+* **DELETE** → adat törlése
+* **SELECT** → adat lekérdezése
+INSERT INTO users (id, name)
+VALUES (1, 'Anna');
+Itt már konkrét adatokat kezelünk.
+| DDL           | DML              |
+| ------------- | ---------------- |
+| Struktúra     | Adat             |
+| Táblák, sémák | Sorok (rekordok) |
+| CREATE, ALTER | INSERT, UPDATE   |
+* **DDL** → adatbázis szerkezetének kezelése
+* **DML** → adatok kezelése az adatbázisban
+**DDL = „mit hozok létre”**
+**DML = „mit csinálok az adatokkal”**
+
+83. Mi a tranzakció?
+egy olyan műveletsor az adatbázisban, amelyet **egyetlen egységként kezelünk**: vagy **minden lépése sikeresen végrehajtódik**, vagy **egyik sem**
+„Minden vagy semmi” elv
+Banki utalás:
+pénz levonása az egyik számláról
+pénz jóváírása a másikon
+Ha az egyik lépés hibázik: az egész művelet visszagörgetődik (rollback)
+Fő tulajdonságok (ACID)
+A – Atomicity (atomosság)
+vagy minden lefut, vagy semmi
+C – Consistency (konzisztencia)
+az adatbázis mindig érvényes állapotban marad
+I – Isolation (izoláció)
+párhuzamos tranzakciók nem zavarják egymást
+D – Durability (tartósság)
+sikeres művelet után az adatok megmaradnak
+Alap műveletek:
+* **BEGIN** → tranzakció indítása
+* **COMMIT** → véglegesítés
+* **ROLLBACK** → visszavonás
+BEGIN;
+UPDATE account SET balance = balance - 100 WHERE id = 1;
+UPDATE account SET balance = balance + 100 WHERE id = 2;
+COMMIT;
+A Spring Framework-ben:
+@Transactional
+public void transfer() {
+    // több adatbázis művelet
+Ha hiba történik → automatikus rollback
+A tranzakció egy **biztonságos műveleti egység**, amely:
+* garantálja az adatok helyességét
+* hibánál visszaállítja az eredeti állapotot
+„Minden sikerül, vagy semmi sem történik.”
+
+VI.JDBC
+
+84. Mi a Maven?
+A Apache Maven egy olyan szoftver, amely képes Java alkalmazások függőségeinek kezelésére és a build folyamatok automatizálására. Tehát egyszerre csomagkezelő (*package manager*) 
+és build automatizáló eszköz (*build automation tool*).
+Most a függőségkezelésre fogjuk használni, vagyis arra, hogy segítsen beszerezni a projektünkhöz szükséges külső könyvtárakat.
+A IntelliJ IDEA teljes körű integrációt támogat a Mavennel, ezért nem szükséges külön telepítenünk.
+Hol lehet konfigurálni a Mavent? * A ***pom.xml*** fájlban. Maven tutorial: https://www.youtube.com/watch?v=Fe6lrsPmseo free maven resources
+
+85. Hogyan történik a pom.xml ellenőrzése?
+* Nézd meg a ***00-jdbc-intro*** modulban található ***pom.xml*** fájlt.
+* XML: általános célú jelölőnyelv (*markup language*)
+* `properties` tag: Itt adhatod meg, hogy melyik Java verziót használja a projekt (ha nem adod meg, az alapértelmezett a Java 5. Hidd el, azt nem akarod használni.)
+* `dependency` tag: Itt lehet megadni a szükséges könyvtárakat a [Maven Repository](https://mvnrepository.com?utm_source=chatgpt.com) oldalról
+* Próbáld megkeresni ezen az oldalon a **mysql-connector** könyvtárat; ez segít az alkalmazásunknak MySQL adatbázishoz kapcsolódni.
+* Miért jó ez nekünk?* Nem kell egyesével bemásolnod ezeket a könyvtárakat a projektbe.
+* Ha többen dolgoznak ugyanazon a projekten, a többiek is automatikusan megkapják ezeket a függőségeket, ha a ***pom.xml*** fájlt feltöltöd gitbe.
+* Nem kell ezeket a könyvtárakat becsomagolni és elküldeni másoknak, mert a Maven letölti őket az internetről a saját gépükre.
+* A Maven a könyvtárakat a **Users/felhasználóneved/.m2** mappába tölti le.
+
+86. Mik a JDBC fő céljai? Java Database Connectivity
+Egységes Java API (interfészek gyűjteménye) relációs adatbázisok adatainak kezelésére
+Segítségével perzisztens adatokat tudunk tárolni és lekérdezni
+A JDBC objektumok, mint például a `Connection`, `Statement`, `PreparedStatement` és `ResultSet`, erőforrások, amelyeket le kell zárni, miután már nincs rájuk szükség.
+Egy „szélesebb hatókörű” objektum lezárja az általa létrehozott többi erőforrást is. Például egy `Connection` lezárása lezárja a `Statement` objektumokat, egy `Statement` lezárása 
+pedig a visszaadott `ResultSet`-et is.Javasolt a `Connection` objektumot a program végéig nyitva tartani, de a `Statement` és `PreparedStatement` objektumokat érdemes 
+a `try-with-resources` blokkba helyezni.
+A `ResultSet` lezárása általában nem szükséges, mert röviddel a feldolgozása után a `(Prepared)Statement` is lezárásra kerül.
+https://blogs.oracle.com/weblogicserver/using-try-with-resources-with-jdbc-objects
+Azokhoz a lekérdezésekhez, amelyek nem tartalmaznak behelyettesítendő paramétereket, elegendő a `Statement` használata.
+Azoknál a lekérdezéseknél, amelyek paramétereket tartalmaznak, `PreparedStatement` használata ajánlott, és a paramétereket `setString()`, `setInt()` stb. metódusokkal kell beállítani.
+Ez sokkal biztonságosabb.Ha normál String műveletekkel fűzünk össze SQL lekérdezéseket, az SQL injection támadásokhoz vezethet.Emellett a `PreparedStatement`gyakran hatékonyabb és gyorsabb
+Régebbi útmutatók szerint a JDBC drivert először a `Class.forName()` metódussal kellett betölteni.
+Java 6 óta erre már nincs szükség. Ennek ellenére előfordulhat, hogy a háttérben még mindig megtörténik a driver konstruktorában.
+Naplózhatod, hogyan néz ki egy lekérdezés a paraméterek behelyettesítése után, ha meghívod a `toString()` metódust a `PreparedStatement` objektumon.
+Ajánlott az adatbázis-kezelési logikát egyetlen osztályba szervezni.
+Így a kód könnyebben olvasható lesz, és egyszerűbben lecserélhető maga az adatbázis-technológia is.
+Néha egy interfészt is bevezetnek ehhez a megközelítéshez; ezt DAO mintának Data Access Object pattern-nek nevezik
+http://best-practice-software-engineering.ifs.tuwien.ac.at/patterns/dao.html
+
+87. Mi a JPA konfiguráció és tranzakciókezelés?
+Dolgozz a ***04-jpa-webshop*** modulban. Készítsünk egy webshop alkalmazást! Van egy alap kódunk, de még sok minden hiányzik belőle.
+A `persistence.xml` fájl a `main/resources/META-INF` mappában található az egyszerűség kedvéért. Nézzük át, mi található ebben a fájlban!
+Annotálnunk kell a `Product` osztályt, hogy a példányait el tudjuk menteni JPA-val.
+Figyeld meg a `@GeneratedValue` annotációt, amely automatikus ID generálásra szolgál.
+Ha egy példányt `null` ID-val mentünk el, akkor a JPA szolgáltató automatikusan generál hozzá egy egyedi értéket. A `Webshop` osztályban inicializáljuk a JPA-t.
+Először létrehozunk egy `EntityManagerFactory` objektumot, majd ennek segítségével egy `EntityManager` példányt. Az adatbázis műveleteket ezen az objektumon keresztül fogjuk végrehajtani.
+Ne felejtsd el bezárni az `EntityManager`-t az adatbázis műveletek után!
+EntityManager entityManager = entityManagerFactory.createEntityManager();
+// ide jön a JPA kódod...
+entityManager.close();
+Az EntityManager objektum NEM thread-safe! Mindig hozz létre újat, és bezárás után ne használd újra.
+Olvass utána a thread safety fogalmának: https://stackoverflow.com/questions/261683/what-is-meant-by-thread-safe-code
+A JPA *író* műveleteinek (create, update, delete) tranzakción belül kell futniuk. Ehhez szükségünk van egy `EntityTransaction` objektumra is.
+Később még többet fogsz tanulni a tranzakciókról, most egyelőre csak annyit jegyezz meg, hogy az ilyen műveleteket tranzakcióba kell csomagolni:
+EntityTransaction transaction = entityManager.getTransaction();
+transaction.begin();
+// ide jön a JPA kódod...
+transaction.commit();
+Most már minden adott az első két műveletünk megvalósításához.
+A `saveProduct()` metódus esetén tranzakciót kell indítanunk, mivel ez egy író művelet lesz.
+Ezután az `em.persist()` segítségével elmentjük az új példányt az adatbázisba, végül commitoljuk a tranzakciót.Most kössük össze ezt a kódot a szöveges felhasználói felülettel, 
+és próbáljuk ki! Rendben, most már a Product objektumokat is listáznunk kell.
+Ehhez egy új dolgot használunk, a JPQL-t, amely nagyon hasonlít az SQL-re, de objektumokra épül (az entity osztályokat használhatjuk a táblák helyett).
+
+88. Mi a JPQL: Munka objektumokkal?
+Folytasd a munkát a ***04-jpa-webshop*** modulban: https://youtu.be/O3Tgq6l3lMI
+A Java Persistence Query Language (JPQL) a JPA által definiált lekérdező nyelv.
+A JPQL hasonlít az SQL-re, de táblák és oszlopok helyett objektumokkal, attribútumokkal és kapcsolatokkal dolgozik.
+Olvasd át az alábbi összefoglalót, hogy képet kapj arról, mire képes a JPQL. Szükséged lesz rá például egy adott entity összes példányának listázásához.
+Nem kell mindent megtanulni vagy megjegyezni — csak szerezz egy általános képet arról, hogy mire használható a JPQL, hogy később tudd, hol keresd az információt, amikor szükséged lesz rá.
+https://en.wikibooks.org/wiki/Java_Persistence/JPQL
+
+89.Mi a One-to-many kapcsolat leképezése?
+https://www.geeksforgeeks.org/jpa-one-to-many-mapping
+Folytasd a munkát a **webshop-jpa** projekten.
+Most a rendelések kezelését fogjuk támogatni. Egy rendelés pontosan egy vásárlóhoz tartozik, viszont egy vásárlónak több rendelése is lehet. 
+Tehát *Customer* és *Order* között egy egy-a-többhöz (*one-to-many*) kapcsolat van.
+Jelenleg a rendelésekben csak a rendelés dátumát és egy megjegyzés (`comment`) szöveget tárolunk, a megrendelt tételeket később adjuk hozzá.
+Hozd létre az új osztályt, és képezd le az adatbázisba.Figyelj arra, hogy az `ORDER` SQL kulcsszó, ezért valószínűleg nem fog működni, ha a táblát `Order` néven próbálod létrehozni.
+Ehelyett használhatsz `@Table` annotációt az entity-n, és felülírhatod az alapértelmezett elnevezést, például `Purchase` névre.
+Mivel ez egy many-to-one kapcsolat, a hivatkozást gyakorlatilag a „many” oldalon, az `Order` osztályban kell tárolni. Az inverz oldalon használd a `mappedBy` attribútumot.
+Valósítsd meg a rendelés leadását a felhasználói felületen keresztül. Tipp: csak a customer ID-ját kell bekérned bemenetként.
+One-to-many kapcsolat leképezése:
+Hozz létre egy új `Address` entity-t (`zipcode`, `city`, `streetName`, `houseNumber`), és kapcsolódjon a `Customer` entity-hez.
+Egy vásárlónak több címe is lehet, de egy cím csak egyetlen vásárlóhoz tartozhat.
+Valósítsd meg az alábbi funkciókat a felhasználói felületen:
+új cím mentése
+cím módosítása
+cím törlése
+egy vásárló összes címének listázása
+
+90.Mik a Tranzakciók?
+https://vladmihalcea.com/2014/01/05/a-beginners-guide-to-acid-and-database-transactions
+Mi a Tranzakció visszagörgetés (rollback)?
+Folytasd a munkát a ***04-jpa-webshop*** modulban. Konzisztencia problémák esetén a tranzakciók a barátaid.
+Képzeld el, hogy van egy termékkészlet-kezelésed is, elkezded menteni a rendelést, majd a folyamat közepén kiderül, hogy az egyik termék elfogyott.
+Ilyenkor törölnöd kellene a rendelést az adatbázisból, és vissza kellene tenned a már lefoglalt termékeket a készletbe. Ezt manuálisan kezelni nagyon körülményes lenne.
+Vagy például bekéred a customer ID-t bemenetként, de érvénytelen ID-t kapsz, és ezt csak akkor veszed észre, amikor lekérdezed a vásárlót az adatbázisból.
+Szerencsére az adatbázisokban már létezik egy eszköz, ami segít ezek kezelésében (és sok más problémában is): a tranzakciók!
+Nézzük meg, hogyan kezelhetjük a tranzakció visszagörgetését (`rollback`) `SQLException` esetén:
+indíts egy `try-catch` blokkot a tranzakció megkezdése után
+ha a `try` ág hiba nélkül lefut, commitold a tranzakciót
+ha kivétel történik: logold ki a konzolra (`e.printStackTrace()`), majd görgesd vissza a tranzakciót (`transaction.rollback()`),
+és ha valami más probléma történik (például nem található customer a megadott ID-val), akkor szintén rollbackelheted a tranzakciót
+
+91. Hogyan történik a Many-to-Many kapcsolat leképezése?
+https://www.geeksforgeeks.org/jpa-many-to-many-mapping
+many-to-many kapcsolatok a való életben
+hogyan modellezhetjük ezeket relációs adatbázisban?
+miért nem használunk általában közvetlen many-to-many kapcsolatot JPA-ban?
+Hogyan alakítsunk át Many-to-Many kapcsolatot One-to-Many kapcsolatokra?
+Már rendelkezünk az `Order` entity-vel az előző napról, most tegyünk bele valódi termékeket is.
+De várjunk! Egy rendelés több terméket is tartalmazhat, és egy termék több rendelésben is szerepelhet.Ez bizony egy many-to-many kapcsolat lenne!
+Az adatbázisban ezt a kapcsolatot általában egy *kapcsolótábla* (*join table*) valósítja meg, ezért hozzunk létre egy entity-t, amely ezt reprezentálja.
+Hozz létre egy `OrderItem` entity-t, amely mind az `Order`, mind a `Product` entity-hez many-to-one kapcsolattal csatlakozik.
+Módosítsd a rendelések mentésének és frissítésének felhasználói felületét úgy, hogy a rendelésben szereplő termékeket is el lehessen menteni.
+
+92.Mik a további JPA annotációk?
+Eddig csak one-to-many és many-to-one kapcsolatokat láttál entity-k között.
+De mi van akkor, ha csak Stringek vagy primitív típusok gyűjteményét szeretnéd tárolni, például egy `Set<String>` vagy `List<Integer>` mezőt egy entity-ben?
+Ez hasonlít egy one-to-many kapcsolatra, de a JPA ezt kissé másképp kezeli. Hogyan lehet String és primitív típusú kollekciókat tárolni JPA segítségével:
+https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0
+Hogyan lehet enumokat adatbázisba leképezni: http://tomee.apache.org/examples-trunk/jpa-enumerated
+Mik a Címkék és kategóriák?
+Támogasd a tagek használatát a termékekhez.
+A felhasználó tetszőleges számú taget adhat meg vesszővel elválasztva. Tárold őket `List<String>` formában, és használd a megfelelő JPA annotációt!
+Támogasd a termékkategóriákat: BOOKS` `CLOTHING` `ELECTRONICS` A kategóriát enumként tárold, és használd a megfelelő JPA annotációt az adatbázisba való leképezéshez!
+
+93.Mi a Fetch stratégia és az entity állapotok?
+Nézd meg, mi történik, ha a vásárlók listázásakor megpróbálod kilistázni az egyes vásárlók rendeléseit is. Kivételt fogsz kapni...
+A rendelések alapértelmezetten nincsenek betöltve, mert ez költséges művelet lehet.
+A JPA megpróbál hatékonyabb lenni, ezért csak akkor tölti be ezeket az adatokat, ha erre kifejezetten szükség van.
+Az eager és lazy fetch működése: https://thoughts-on-java.org/entity-mappings-introduction-jpa-fetc
+A fetch stratégia szorosan kapcsolódik az entity állapotokhoz. Az entity példány csak addig van szinkronban az adatbázissal, amíg a tranzakció tart.
+Amikor lezárod a tranzakciót, a kapcsolat megszűnik. Ha a tranzakción belül próbálod elérni a kapcsolódó entity-ket, a Hibernate betölti őket, 
+de amikor az entity detached állapotba kerül, ugyanazt a kivételt kapod, amit korábban láttál.
+Az entity állapotokról: https://vladmihalcea.com/a-beginners-guide-to-jpa-hibernate-entity-state-transitions
+Explicit eager fetch:
+Állítsd be a `Customer` osztályban a rendelések betöltését eager fetch-re, és a customer lista megjelenítésekor jelenítsd meg a vásárlók rendeléseit is.
+Cascading és OrphanRemoval: nézd végig debugger segítségével, hogyan működnek az egyes cascading opciók.
+
+94.Hogyan lehet JPA-t kényelmesen tesztelni?
+Ha ugyanazt a konfigurációt használod tesztelésre, akkor az éles adatbázisra lesz szükséged, és minden teszt után tisztítani kellene az adatbázist.
+beszúrsz egy Product-ot
+ellenőrzöd, hogy 1 van az adatbázisban
+második futtatásnál már 2 lesz → elromlik a teszt
+Ezért általában más megközelítést használunk.
+A legegyszerűbb megoldás egy in-memory adatbázis használata tesztekhez.
+a teszttel együtt indul
+mindig üres
+nem kell takarítani
+Gyakran használt: H2 vagy HSQL.
+Függőségek hozzáadása (test scope)
+```xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.8.1</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>1.4.200</version>
+    <scope>test</scope>
+</dependency>
+A külön persistence.xml tesztekhez hozz létre egy új fájlt: `src/test/resources/META-INF/persistence.xml`
+Ez H2 (vagy HSQL) in-memory adatbázist használ:
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+        <persistence-unit name="webshop-test" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.progmasters.jpa.webshop.domain.Product</class>
+        <class>com.progmasters.jpa.webshop.domain.Customer</class>
+        <class>com.progmasters.jpa.webshop.domain.Order</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+        </properties>
+    </persistence-unit>
+</persistence>
+Webshop konstruktor bővítése (tesztelhetőség miatt)
+Adj hozzá egy konstruktor-t, ami kap egy `EntityManagerFactory`-t:
+public Webshop(EntityManagerFactory entityManagerFactory) {
+    this.entityManagerFactory = entityManagerFactory;
+Ez lehetővé teszi, hogy tesztből saját konfigurációt injektálj.
+Teszt osztály létrehozása.Inicializálás H2 konfigurációval:
+@BeforeEach
+public void init() {
+    EntityManagerFactory emf =
+            Persistence.createEntityManagerFactory("webshop-test");
+    webshop = new Webshop(emf);
+Tesztek írása
+Ezután ugyanúgy írsz teszteket, mint más Java kódnál:
+termék mentése
+vásárló létrehozása
+rendelés mentése
+lekérdezések ellenőrzése
+Lényeg
+Éles DB helyett → in-memory DB
+Automatikus tiszta állapot minden tesztnél
+`create-drop` miatt nincs manuális cleanup
+EntityManagerFactory injektálható → könnyen tesztelhető architektúra
+
+95. Mi a különbség a JDBC, a JPA és a Hibernate között? 
+mind adatbázis-kezeléshez kapcsolódik a Java világában, de különböző szintű absztrakciót képviselnek.
+JDBC (legalacsonyabb szint)
+„közvetlen adatbázis kommunikáció”
+* SQL lekérdezéseket **kézzel írunk**
+* kapcsolatot kezeljük manuálisan
+Connection conn = DriverManager.getConnection(url);
+PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users");
+ResultSet rs = stmt.executeQuery();
+* sok boilerplate kód
+* teljes kontroll
+* nehézkesebb használat
+JPA (szabvány / interfész)
+„ORM szabvány Java-ban”
+* nem konkrét implementáció
+* csak egy **specifikáció**
+Meghatározza, hogyan kell objektumokat adatbázisra leképezni
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+Hibernate (JPA implementáció)
+„valós ORM framework”
+* implementálja a JPA-t
+* automatikusan kezeli az SQL-t
+* objektum ↔ tábla leképezés
+userRepository.save(user);
+nem kell SQL-t írni
+| Technológia | Szint          | Jelleg          |
+| ----------- | -------------- | --------------- |
+| JDBC        | legalacsonyabb | kézi SQL        |
+| JPA         | szabvány       | ORM definíció   |
+| Hibernate   | implementáció  | automatikus ORM |
+* JPA = szabályrendszer
+* Hibernate = JPA megvalósítása
+* JDBC = alap adatbázis API
+* **JDBC** → kézzel vezeted az autót
+* **JPA** → autóvezetési szabályok
+* **Hibernate** → automata autó, ami követi a szabályokat
+* **JDBC** → SQL-t kézzel írod
+* **JPA** → ORM szabvány
+* **Hibernate** → JPA-t megvalósító framework
+A modern Spring alkalmazásokban általában **JPA + Hibernate** kombinációt használnak.
+
+V.SQL 
+
+96. Tudsz-e mondani egy aggregáló függvényt SQL-ben?
+olyan függvények, amelyek **több sorból egyetlen értéket számolnak ki
+COUNT** megszámolja a sorokat
+SELECT COUNT(*) FROM users;
+Visszaadja, hány felhasználó van a táblában.
+SELECT SUM(salary) FROM employees;
+összeadja az értékeket
+SELECT AVG(age) FROM users;
+átlagot számol
+SELECT MIN(price) FROM products;
+legkisebb érték
+SELECT MAX(price) FROM products;
+legnagyobb érték
+* több sorból **egy eredményt számolnak**
+* pl. COUNT, SUM, AVG, MIN, MAX
+Ezeket gyakran használjuk riportoknál és statisztikáknál.
+
+97. Mi a különbség a SELECT és a DISTINCT utasítások között SQL-ben?
+együtt vagy külön használhatók, de teljesen más célt szolgálnak.
+SELECT👉 Adatok lekérdezésére szolgál
+* visszaadja az összes sort
+* akár ismétlődő értékekkel is
+SELECT city FROM users;
+👉 Eredmény lehet:
+Budapest
+Debrecen
+Budapest
+Szeged
+DISTINCT👉 Duplikációk eltávolítása
+* csak **egyedi értékeket** ad vissza
+SELECT DISTINCT city FROM users;
+👉 Eredmény:
+Budapest
+Debrecen
+Szeged
+| SELECT                   | DISTINCT                |
+| ------------------------ | ----------------------- |
+| minden rekordot visszaad | duplikációkat eltávolít |
+| alap lekérdezés          | szűrt (egyedi) eredmény |
+A DISTINCT mindig a SELECT része:
+SELECT DISTINCT city FROM users;
+* **SELECT** → minden adatot lekér
+* **DISTINCT** → csak egyedi értékeket ad vissza
+A DISTINCT a SELECT eredményét „szűri ki” az ismétlődések alapján.
+
+98. Mi az a JOIN SQL-ben, és milyen típusait ismered? 
+arra szolgál, hogy **több táblát összekapcsoljunk egy közös oszlop alapján**, és így egyetlen lekérdezésben kapjunk összetett adatokat.
+Adatok gyakran több táblában vannak (normalizált adatbázis):
+* users
+* orders
+* products
+👉 JOIN-nal ezeket össze tudjuk kapcsolni.
+INNER JOIN👉 csak a **mindkét táblában egyező rekordok**
+SELECT users.name, orders.id
+FROM users
+INNER JOIN orders ON users.id = orders.user_id;
+👉 csak azok a users jelennek meg, akiknek van rendelésük
+LEFT JOIN (LEFT OUTER JOIN)
+👉 minden rekord a bal táblából + egyezések a jobb táblából
+SELECT users.name, orders.id
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id;
+👉 minden user megjelenik, akkor is, ha nincs rendelése
+RIGHT JOIN (RIGHT OUTER JOIN)👉 minden rekord a jobb táblából
+SELECT users.name, orders.id
+FROM users
+RIGHT JOIN orders ON users.id = orders.user_id;
+👉 minden rendelés megjelenik, még ha nincs user (ritkábban használják)
+FULL OUTER JOIN👉 mindkét tábla összes rekordja
+SELECT users.name, orders.id
+FROM users
+FULL OUTER JOIN orders ON users.id = orders.user_id;
+👉 egyezések + nem egyező sorok is
+CROSS JOIN
+👉 minden kombináció minden sorral
+SELECT users.name, products.name
+FROM users
+CROSS JOIN products;
+👉 „szorzat” jellegű eredmény
+# 🔑 Összefoglalás:
+| JOIN típus | Mit ad vissza             |
+| ---------- | ------------------------- |
+| INNER JOIN | csak egyező rekordok      |
+| LEFT JOIN  | bal tábla minden sora     |
+| RIGHT JOIN | jobb tábla minden sora    |
+| FULL JOIN  | mindkét tábla összes sora |
+| CROSS JOIN | minden kombináció         |
+# 🔹 Röviden:
+JOIN: 👉 több tábla adatainak összekapcsolására szolgál
+* INNER → közös adatok
+* LEFT → bal tábla mind
+* RIGHT → jobb tábla mind
+* FULL → minden
+* CROSS → kombinációk
+A JOIN az SQL egyik legfontosabb eszköze relációs adatok kezelésére.
+
+99. Mi a különbség a LEFT JOIN és a RIGHT JOIN között SQL-ben? 
+nagyon hasonló műveletek, a különbség az, hogy **melyik táblát tekintjük „fő” (megtartott) táblának**.
+LEFT JOIN👉 „Bal tábla minden sora megmarad”
+* A bal oldali tábla **összes sora szerepel az eredményben**
+* A jobb oldali tábla csak akkor, ha van egyezés
+* Ha nincs egyezés → NULL értékek
+SELECT users.name, orders.id
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id;
+Minden user megjelenik, akkor is, ha nincs rendelése
+RIGHT JOIN 👉 „Jobb tábla minden sora megmarad”
+* A jobb oldali tábla **összes sora szerepel**
+* A bal oldali csak egyezés esetén
+* Ha nincs egyezés → NULL
+SELECT users.name, orders.id
+FROM users
+RIGHT JOIN orders ON users.id = orders.user_id;
+Minden rendelés megjelenik, akkor is, ha nincs hozzá user
+| LEFT JOIN             | RIGHT JOIN             |
+| --------------------- | ---------------------- |
+| bal tábla minden sora | jobb tábla minden sora |
+| jobb oldal lehet NULL | bal oldal lehet NULL   |
+| gyakoribb             | ritkábban használt     |
+A RIGHT JOIN **mindig kiváltható LEFT JOIN-nal**, ha felcseréljük a táblákat:
+A RIGHT JOIN B
+-- ugyanaz, mint:
+B LEFT JOIN A
+* **LEFT JOIN** → bal tábla minden sora
+* **RIGHT JOIN** → jobb tábla minden sora
+A különbség csak abban van, melyik tábla adja az „alap” rekordokat.
+
+100. Mi a GROUP BY SQL utasítás szerepe, és hogyan használható az aggregáló függvényekkel? 
+Arra szolgál, hogy az adatokat **csoportokba rendezze egy vagy több oszlop alapján**, és ezeken a csoportokon **aggregáló függvényeket** tudjunk futtatni.
+* városok szerint
+* kategóriák szerint
+* felhasználók szerint
+SELECT city, COUNT(*)
+FROM users
+GROUP BY city;
+* városonként csoportosít
+* megszámolja hány user van városonként
+Eredmény:
+Budapest  10
+Debrecen  5
+Szeged    8
+A GROUP BY-t mindig **aggregáló függvényekkel együtt használjuk**, mint:
+* **COUNT**
+* **SUM**
+* **AVG**
+* **MIN**
+* **MAX**
+SELECT department, SUM(salary)
+FROM employees
+GROUP BY department;
+Osztályonként összes fizetés
+SELECT department, AVG(salary)
+FROM employees
+GROUP BY department;
+Osztályonként átlagfizetés
+minden SELECT-ben szereplő oszlopnak vagy:
+* csoportosítottnak kell lennie
+* vagy aggregáló függvényben kell szerepelnie
+GROUP BY + HAVING (plusz info)
+A csoportokra szűrést a **HAVING** végzi:
+SELECT city, COUNT(*)
+FROM users
+GROUP BY city
+HAVING COUNT(*) > 5;
+csak azok a városok, ahol több mint 5 user van
+* **GROUP BY** → adatok csoportosítása
+* **Aggregáló függvényekkel együtt használjuk**
+* Pl. COUNT, SUM, AVG
+Segítségével összesítéseket készítünk adatcsoportokra.
+101. Mi a különbség a WHERE és a HAVING utasítások között SQL-ben?
+mindkettő szűrésre szolgál, de **különböző fázisban és más célra használjuk őket**.
+WHERE 👉 „Sor szintű szűrés”
+* **a táblában lévő egyedi sorokat szűri**
+* még a csoportosítás (GROUP BY) előtt működik
+SELECT *
+FROM users
+WHERE age > 18;
+csak a 18 év feletti felhasználók
+HAVING 👉 „Csoport szintű szűrés”
+* **GROUP BY után szűr**
+* aggregált eredményeket szűr (pl. COUNT, SUM)
+SELECT city, COUNT(*)
+FROM users
+GROUP BY city
+HAVING COUNT(*) > 5;
+👉 csak azok a városok maradnak, ahol több mint 5 user van
+| WHERE                    | HAVING               |
+| ------------------------ | -------------------- |
+| sorokat szűr             | csoportokat szűr     |
+| GROUP BY előtt           | GROUP BY után        |
+| nem használ aggregátumot | használ aggregátumot |
+Logikai sorrend SQL-ben:
+1. FROM
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+SELECT city, COUNT(*)
+FROM users
+WHERE age > 18
+GROUP BY city
+HAVING COUNT(*) > 5;
+először szűri a felnőtteket (WHERE),
+majd városonként csoportosít,
+végül csak a nagy csoportokat hagyja meg (HAVING)
+* **WHERE** → egyedi sorokat szűr
+* **HAVING** → csoportosított eredményeket szűr
+A WHERE „előszűr”, a HAVING „utószűr”.
+
+101. Mi a PRIMARY KEY és a FOREIGN KEY, és hogyan használjuk őket adatbázisokban?
+Az adatbázisok **kapcsolatainak és integritásának biztosítására** szolgálnak.
+PRIMARY KEY👉 „Egyedi azonosító egy táblában”
+* Minden rekordot **egyértelműen azonosít**
+* **Nem lehet NULL**
+* **Nem ismétlődhet**
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    name VARCHAR(100)
+az `id` minden usernél egyedi
+* kapcsolatok létrehozása más táblákkal
+FOREIGN KEY👉 „Hivatkozás egy másik tábla elsődleges kulcsára”
+* kapcsolatot hoz létre két tábla között
+* biztosítja az **adatbázis integritást**
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+minden rendelés egy userhez tartozik
+* relációk létrehozása táblák között
+* adatkonzisztencia biztosítása
+* nem létező adatra hivatkozás megakadályozása
+ PRIMARY KEY            | FOREIGN KEY                       |
+| --------------------- | --------------------------------- |
+| egy tábla azonosítója | másik tábla kulcsára hivatkozik   |
+| egyedi                | ismétlődhet                       |
+| nem lehet NULL        | lehet NULL (opcionális kapcsolat) |
+| identitás             | kapcsolat                         |
+* users.id → PRIMARY KEY
+* orders.user_id → FOREIGN KEY
+egy userhez több order tartozhat (1:N kapcsolat)
+* **PRIMARY KEY** → egy tábla egyedi azonosítója
+* **FOREIGN KEY** → kapcsolat másik tábla kulcsához
+Ezek együtt biztosítják a relációs adatbázisok strukturált működését.
+
+102. Hogyan működik az AUTO_INCREMENT attribútum SQL-ben, és milyen típusú adatok esetén használható?
+egy SQL tulajdonság, amely automatikusan **növekvő számértéket generál egy oszlop számára**, amikor új rekord kerül beszúrásra.
+* Minden új sor beszúrásakor az adatbázis **automatikusan növeli az értéket**
+* Nem kell kézzel megadni az ID-t
+* Általában 1-gyel növekszik (de ez állítható)
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100)
+INSERT INTO users (name) VALUES ('Anna');
+INSERT INTO users (name) VALUES ('Béla');
+Eredmény:
+1 - Anna
+2 - Béla
+AUTO_INCREMENT általában:
+* **egész szám típusoknál működik**
+* INT
+* BIGINT
+* SMALLINT (ritkábban)
+* elsődleges kulcs (PRIMARY KEY) generálására
+* egyedi azonosítók automatikus létrehozására
+* csak **egy AUTO_INCREMENT oszlop lehet táblánként**
+* általában **PRIMARY KEY-hez kötjük**
+* nem lehet manuálisan ismétlődő érték
+* MySQL → AUTO_INCREMENT
+* PostgreSQL → SERIAL / IDENTITY
+* SQL Server → IDENTITY
+Az AUTO_INCREMENT:
+👉 automatikusan növekvő számot generál új rekordokhoz
+👉 csak numerikus mezőkön használható
+👉 leggyakrabban PRIMARY KEY-hez használjuk
+Célja: egyedi azonosítók egyszerű létrehozása.
+
+103. Mit jelent a NULL érték SQL-ben, és hogyan kezelhetjük azt?
+azt jelenti, hogy egy mezőben **nincs adat / ismeretlen / nincs érték**.
+* nem 0
+* nem üres string (`""`)
+* nem false
+Hanem: **„nincs érték megadva”**
+SELECT name, age FROM users;
+Eredmény:
+Anna   25
+Béla   NULL
+Béla életkora nincs megadva
+NULL nem hasonlítható egyszerűen
+WHERE age = NULL   -- ❌ hibás
+helyette:
+WHERE age IS NULL
+NULL műveletek eredménye is NULL lehet
+SELECT 10 + NULL;  -- eredmény: NULL
+IS NULL / IS NOT NULL
+SELECT * FROM users WHERE age IS NULL;
+SELECT * FROM users WHERE age IS NOT NULL;
+COALESCE (alapérték adása)
+ha NULL, adjon vissza más értéket
+SELECT COALESCE(age, 0) FROM users;
+NULL helyett 0 jelenik meg
+IFNULL / NVL (DB-függő)
+* MySQL: IFNULL
+* Oracle: NVL
+SELECT IFNULL(age, 0) FROM users;
+Aggregációknál
+COUNT(*)** → számolja a NULL-t is
+COUNT(oszlop)** → NULL-t nem számolja
+| Fogalom  | Jelentés                 |
+| -------- | ------------------------ |
+| NULL     | nincs / ismeretlen érték |
+| IS NULL  | NULL ellenőrzés          |
+| COALESCE | alapérték NULL helyett   |
+A NULL:
+👉 „nincs adat az adott mezőben”
+* IS NULL ellenőrzés
+* COALESCE / IFNULL alapértékhez
+A NULL egy speciális állapot, nem egyszerű érték.
+
+VI.Spring 
+
+104. Mi az a Statement és PreparedStatement JDBC-ben, és mikor érdemes az egyiket a másik helyett használni?
+két módja annak, hogy SQL lekérdezéseket futtassunk egy Java alkalmazásból adatbázis felé.
+Statement👉 „Egyszerű SQL futtató eszköz”
+* SQL parancsot **szövegként futtat**
+* minden alkalommal újra feldolgozza a lekérdezést
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery(
+    "SELECT * FROM users WHERE name = 'Anna'"
+* **SQL injection veszély**
+* lassabb, mert minden futtatáskor újra parse-ol
+PreparedStatement👉 „Előre fordított SQL sablon”
+* SQL-t előre előkészíti (precompile)
+* paramétereket külön kezeli (`?`)
+PreparedStatement ps = conn.prepareStatement(
+    "SELECT * FROM users WHERE name = ?"
+ps.setString(1, "Anna");
+ResultSet rs = ps.executeQuery();
+* **biztonságos (SQL injection ellen véd)**
+* **gyorsabb ismételt futtatásnál**
+* jobb olvashatóság
+* automatikus típuskezelés
+| Statement             | PreparedStatement |
+| --------------------- | ----------------- |
+| sima SQL string       | paraméteres SQL   |
+| lassabb               | gyorsabb          |
+| SQL injection veszély | biztonságos       |
+| nincs előkészítés     | előre fordított   |
+Statement:
+* ritka, egyszerű lekérdezés
+* nem dinamikus input
+PreparedStatement:
+* felhasználói input esetén (⚠️ kötelező ajánlott)
+* ismétlődő lekérdezések
+* CRUD műveletek
+* **Statement** → egyszerű, de kevésbé biztonságos
+* **PreparedStatement** → biztonságos, gyors és ajánlott
+A modern Java fejlesztésben szinte mindig a **PreparedStatement** az ajánlott megoldás.
+
+105. Implementáltuk egy projektben a JPA-t, szeretnénk hogy az ORM működjön egy Java objektumon, mit kell írjunk ehhez az osztályba? (@Id, @Entity)
+Ahhoz, hogy egy Java osztályt a **JPA** ORM (Object-Relational Mapping) kezelni tudjon a Hibernate segítségével (vagy más JPA implementációval), az osztályt **entitássá kell tenni**.
+@Entity👉 Jelzi, hogy az osztály **adatbázis táblának felel meg**
+@Id👉 Meghatározza az **elsődleges kulcsot (PRIMARY KEY)**
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private int age;
+@Entity
+* az osztály → adatbázis tábla
+* pl. `User` → `user` tábla
+@Id
+* egyedi azonosító mező
+* ez lesz a PRIMARY KEY
+@GeneratedValue (gyakori kiegészítés)
+* automatikus ID generálás
+* pl. AUTO_INCREMENT megfelelője
+Opcionális, de gyakori annotációk:
+* **@Column** → oszlop beállítások
+* **@Table** → tábla neve
+* **@OneToMany, @ManyToOne** → kapcsolatok
+@Entity
+class User {
+    @Id
+    private Long id;
+    private String name;
+CREATE TABLE user (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255)
+Ahhoz, hogy egy Java osztály ORM-mel működjön:
+* **@Entity** → jelöli, hogy adatbázis entitás
+* **@Id** → elsődleges kulcs
+Ezek nélkül a JPA nem kezeli az osztályt adatbázis objektumként.
+
+106. Mi a különbség az @OneToMany és az @ManyToOne annotációk között a Hibernate-ben?
+A **Hibernate** (és a **JPA**) kapcsolatkezelésében az **@OneToMany** és az **@ManyToOne** annotációk két ellentétes irányú **táblakapcsolatot** jelölnek a Java entitások között.
+Ezek relációs adatbázis kapcsolatok leképezése objektumokra.
+@ManyToOne👉 „Több gyerek → egy szülő”
+* Sok rekord tartozik **egy másik entitáshoz**
+* A **FOREIGN KEY** általában itt van
+@Entity
+public class Order {
+    @Id
+    private Long id;
+    @ManyToOne
+    private User user;
+Több order tartozhat egy userhez
+@OneToMany👉 „Egy szülő → több gyerek”
+* Egy entitás **több másik entitást tartalmaz**
+* Gyakran a „mappedBy” oldalon van
+@Entity
+public class User {
+    @Id
+    private Long id;
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+Egy userhez több order tartozik
+| @ManyToOne         | @OneToMany    |
+| ------------------ | ------------- |
+| sok → egy          | egy → sok     |
+| FOREIGN KEY oldala | gyűjtő oldal  |
+| Order → User       | User → Orders |
+Mindig párban használjuk:
+* Order → User (**@ManyToOne**)
+* User → Orders (**@OneToMany**)
+* A **ManyToOne az „owner side” (tulajdonos oldal)**
+* A **OneToMany csak leképezés, nem mindig tartalmaz FK-t**
+users:
+id | name
+orders:
+id | user_id (FOREIGN KEY)
+* **@ManyToOne** → több gyerek egy szülőhöz
+* **@OneToMany** → egy szülő több gyerekkel
+Ez a két annotáció együtt modellezi a relációs adatbázis kapcsolatok Java objektumokban való leképezését.
+
+107. Mit jelent a "lazy loading" és a "eager loading" a Hibernate-ben, és mikor érdemes az egyiket használni a másik helyett? 
+Azt határozza meg, hogy a kapcsolt entitások **mikor töltődnek be az adatbázisból** a Java alkalmazásban.
+Lazy Loading (lustán betöltés) 👉 „csak akkor töltöm be, amikor tényleg kell”
+* A kapcsolt adatok **nem töltődnek be azonnal**
+* Csak akkor, amikor először hozzáférsz
+@OneToMany(fetch = FetchType.LAZY)
+private List<Order> orders;
+A user betöltődik, de az orders csak akkor, ha kell
+* gyorsabb induló lekérdezés
+* kevesebb memóriahasználat
+* hatékony nagy adathalmaznál
+* **LazyInitializationException** előfordulhat
+* több DB lekérdezés fut „később”
+Eager Loading (azonnali betöltés)👉 „mindent azonnal betöltök”
+* A fő entitással együtt **az összes kapcsolt adat is betöltődik**
+@OneToMany(fetch = FetchType.EAGER)
+private List<Order> orders;
+user + orders együtt töltődik be
+* nincs későbbi DB hívás
+* egyszerűbb használat
+* nem futsz bele lazy hibába
+* lassabb lekérdezés
+* felesleges adatbetöltés
+* nagy memóriahasználat
+| Lazy Loading          | Eager Loading                    |
+| --------------------- | -------------------------------- |
+| késleltetett betöltés | azonnali betöltés                |
+| csak szükség esetén   | mindig betölti                   |
+| hatékonyabb           | egyszerűbb, de nehezebb skálázni |
+Lazy (ajánlott alapból):
+* nagy adatmennyiség
+* REST API-k
+* mikor nem mindig kell a kapcsolat
+Eager:
+* kis adatok
+* biztosan mindig kell a kapcsolt adat
+* egyszerű CRUD alkalmazások
+Gyakorlati szabály:👉 „Default = LAZY, csak indokolt esetben EAGER”
+* **Lazy loading** → csak akkor tölti be az adatot, ha kell
+* **Eager loading** → azonnal betölti a kapcsolt adatokat
+A cél a teljesítmény és memória optimalizálása az adatmodell szerint.
+
+108. Mi az a cascade attribútum a JPA-ban, és hogyan segíti az entitások közötti kapcsolatok kezelését?
+Azt határozza meg, hogy egy entitáson végzett művelet **automatikusan továbbterjed-e a kapcsolódó entitásokra is**. Ezt a Hibernate valósítja meg a háttérben.
+Ha egy objektummal csinálok valamit, akkor a hozzá tartozókat is kezelje automatikusan a rendszer.
+@Entity
+public class User {
+    @Id
+    private Long id;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Order> orders;
+Ha a User-t mentjük, az Orders is mentődik
+PERSIST👉 mentés továbbadása
+cascade = CascadeType.PERSIST
+MERGE👉 módosítások továbbadása
+REMOVE👉 törlés továbbadása
+cascade = CascadeType.REMOVE
+User törlés → Orders is törlődik
+ALL👉 minden művelet cascaded
+cascade = CascadeType.ALL
+* kevesebb kézi adatkezelés
+* konzisztens kapcsolatok
+* egyszerűbb kód
+* véletlen adatvesztés (pl. REMOVE cascadenél)
+* nehezebb kontroll nagy rendszerekben
+* teljesítményproblémák
+User user = new User();
+user.setOrders(List.of(new Order()));
+entityManager.persist(user);
+👉 cascade ALL esetén:
+* user mentődik
+* orders automatikusan mentődik
+Kapcsolat más fogalmakkal:
+* **@OneToMany / @ManyToOne** → kapcsolat definiálása
+* **cascade** → műveletek terjedése
+* **fetch (LAZY/EAGER)** → betöltés ideje
+A cascade azt jelenti, hogy:
+👉 az egyik entitáson végzett műveletek automatikusan érvényesülnek a kapcsolódó entitásokon is
+* PERSIST → mentés
+* REMOVE → törlés
+* MERGE → módosítás
+* ALL → minden művelet
+A cél: egyszerűbb és konzisztens entitáskezelés a JPA-ban.
+
+VII. Java SE
+
+109. Hogyan adnál össze egy listányi/tömbnyi számot? (lényeg a sum változó megléte legyen)
+Egy lista vagy tömb elemeinek összeadásánál a lényeg mindig egy **összegző változó (sum)** használata, amit lépésről lépésre növelünk.
+Java példa array:
+int[] numbers = {1, 2, 3, 4, 5};
+int sum = 0;
+for (int i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+System.out.println(sum);
+Itt a `sum` változó gyűjti össze az értékeket.
+Java példa (enhanced for loop)
+int[] numbers = {1, 2, 3, 4, 5};
+int sum = 0;
+for (int num : numbers) {
+    sum += num;
+System.out.println(sum);
+Lista esetén (List<Integer>)
+List<Integer> numbers = List.of(1, 2, 3, 4, 5);
+int sum = 0;
+for (int num : numbers) {
+    sum += num;
+System.out.println(sum);
+* kell egy **sum változó**, amit 0-val inicializálunk
+* végigmegyünk az elemeken
+* minden elemet hozzáadunk a sum-hoz
+👉 „sum = 0 → végigiterálás → sum += elem”
+Ez az alap algoritmus minden nyelvben az összeadásra.
+
+110. Hogyan keresnéd meg a legnagyobb számot egy listányi/tömbnyi számon?
+A legnagyobb szám keresésénél a lényeg egy **max változó**, ami mindig az eddig talált legnagyobb értéket tárolja.
+Java példa (tömb esetén)
+int[] numbers = {3, 7, 2, 9, 5};
+int max = numbers[0];
+for (int i = 1; i < numbers.length; i++) {
+    if (numbers[i] > max) {
+        max = numbers[i];
+System.out.println(max);
+A `max` mindig a legnagyobb eddig talált szám.
+Java példa (enhanced for loop)
+int[] numbers = {3, 7, 2, 9, 5};
+int max = numbers[0];
+for (int num : numbers) {
+    if (num > max) {
+        max = num;
+System.out.println(max);
+Lista esetén (List<Integer>)
+List<Integer> numbers = List.of(3, 7, 2, 9, 5);
+int max = numbers.get(0);
+for (int num : numbers) {
+    if (num > max) {
+        max = num;
+System.out.println(max);
+* indulunk az első elemmel (`max`)
+* végigmegyünk az összes elemen
+* ha találunk nagyobbat → frissítjük a `max`-ot
+max = első elem → végigiterálás → ha nagyobb, felülírjuk”
+Ez az alap algoritmus minden programozási nyelvben a maximum keresésére.
+
+111. Keresünk egy számot egy listán/tömbön, hogyan mondanád meg hányadik helyen szerepel ez a szám? 
+Egy szám pozíciójának megkereséséhez a tömbben vagy listában egy **index változót** használunk, és végigkeressük az elemeket. Amint megtaláljuk a keresett számot, visszaadjuk az indexét.
+int[] numbers = {3, 7, 2, 9, 5};
+int target = 9;
+int index = -1; // ha nem találjuk meg
+for (int i = 0; i < numbers.length; i++) {
+    if (numbers[i] == target) {
+        index = i;
+        break;
+System.out.println(index);
+eredmény: `3` (mert a 9 a 3. indexen van)
+Java példa (enhanced for loop nem ideális)
+Itt nem tudjuk az indexet, ezért klasszikus for ciklus kell.
+Lista esetén (List<Integer>)
+List<Integer> numbers = List.of(3, 7, 2, 9, 5);
+int target = 9;
+int index = -1;
+for (int i = 0; i < numbers.size(); i++) {
+    if (numbers.get(i) == target) {
+        index = i;
+        break;
+System.out.println(index);
+Alternatíva (Java beépített megoldás)
+int index = numbers.indexOf(target);
+ha nem találja: `-1`
+* végigiterálunk a listán/tömbön
+* összehasonlítjuk az elemeket
+* ha megtaláltuk → eltároljuk az indexet
+* gyakran `-1` jelenti, hogy nincs benne
+„keresés + index visszaadása”
+Ez az alap lineáris keresés algoritmus.
+
+112. Van egy tömböm/listám, szeretném belőle kiválogatni a kettővel osztható számokat, és elmentani azokat egy új tömbbe/listába, hogyan csinálnád?
+Erre a klasszikus megoldás a **szűrés + új lista feltöltése** (vagyis csak azokat az elemeket tesszük át, amelyek teljesítik a feltételt: „2-vel osztható”).
+int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8};
+List<Integer> evens = new ArrayList<>();
+for (int num : numbers) {
+    if (num % 2 == 0) {
+        evens.add(num);
+System.out.println(evens);
+eredmény: `[2, 4, 6, 8]`
+List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+List<Integer> evens = new ArrayList<>();
+for (int num : numbers) {
+    if (num % 2 == 0) {
+        evens.add(num);
+System.out.println(evens);
+Modern Java megoldás (Stream API)
+List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+List<Integer> evens = numbers.stream()
+        .filter(n -> n % 2 == 0)
+        .toList();
+System.out.println(evens);
+* végigmegyünk az elemeken
+* ellenőrizzük: `num % 2 == 0`
+* ha igaz → betesszük az új listába
+szűrés feltétel alapján + új lista feltöltése”
+Ez az alap **filtering / kiválogatás algoritmus** minden programozási nyelvben.
+
+113.Hogyan keresnéd meg a legkisebb számot egy listányi/tömbnyi számon?
+ugyanaz az elv, mint a maximum esetén, csak itt egy **min változót** tartunk, és mindig a kisebb értéket őrizzük meg.
+int[] numbers = {3, 7, 2, 9, 5};
+int min = numbers[0];
+for (int i = 1; i < numbers.length; i++) {
+    if (numbers[i] < min) {
+        min = numbers[i];
+System.out.println(min);
+eredmény: `2`
+Java példa (enhanced for loop)
+int[] numbers = {3, 7, 2, 9, 5};
+int min = numbers[0];
+for (int num : numbers) {
+    if (num < min) {
+        min = num;
+System.out.println(min);
+Lista esetén (List<Integer>)
+List<Integer> numbers = List.of(3, 7, 2, 9, 5);
+int min = numbers.get(0);
+for (int num : numbers) {
+    if (num < min) {
+        min = num;
+System.out.println(min);
+* indulunk az első elemmel (`min`)
+* végigmegyünk az összes elemen
+* ha kisebbet találunk → frissítjük a `min`-t
+min = első elem → végigiterálás → ha kisebb, felülírjuk”
+Ez a minimum keresés alap algoritmusa minden programozási nyelvben.
+
+114. Mik a 3 es 5-tel osztható számok egy tömbben?
+Ha olyan számokat szeretnél kiválogatni egy tömbből vagy listából, amelyek **3-mal és 5-tel is oszthatók**, akkor a feltétel:
+👉 `szám % 3 == 0 && szám % 5 == 0`
+Ez gyakorlatilag azt jelenti, hogy **15-tel oszthatók**.
+Java példa (tömb → lista)
+int[] numbers = {1, 3, 5, 15, 30, 33, 45, 50};
+List<Integer> result = new ArrayList<>();
+for (int num : numbers) {
+    if (num % 3 == 0 && num % 5 == 0) {
+        result.add(num);
+System.out.println(result);
+eredmény: `[15, 30, 45]`
+Lista esetén
+List<Integer> numbers = List.of(1, 3, 5, 15, 30, 33, 45, 50);
+List<Integer> result = new ArrayList<>();
+for (int num : numbers) {
+    if (num % 3 == 0 && num % 5 == 0) {
+        result.add(num);
+System.out.println(result);
+Modern Java (Stream API)
+List<Integer> numbers = List.of(1, 3, 5, 15, 30, 33, 45, 50);
+List<Integer> result = numbers.stream()
+        .filter(n -> n % 3 == 0 && n % 5 == 0)
+        .toList();
+System.out.println(result);
+* feltétel: **3-mal és 5-tel is osztható**
+* logikai AND: `&&`
+* gyakorlatban: **15-tel osztható számok**
+szűrés: szám % 3 == 0 && szám % 5 == 0”
+Ez egy klasszikus **filtering feladat listákon/tömbökön
+
+115. Mi az algoritmus?
+egy lépésekből álló eljárás egy probléma megoldására. Java-ban az algoritmust programkóddal valósítjuk meg.
+* bemenetet kap
+* feldolgozza az adatot
+* eredményt ad
+Pl.Két szám összeadása.
+int a = 5;
+int b = 3;
+int sum = a + b;
+System.out.println(sum);
+Az algoritmus lépései:
+1 számok beolvasása
+2. összeadás
+3. eredmény kiírása
+Egy jó algoritmus:
+* véges
+* egyértelmű
+* hatékony
+* lépésekből áll
+Gyakori algoritmus típusok
+| Típus           | Példa              |
+| --------------- | ------------------ |
+| keresés         | lineáris keresés   |
+| rendezés        | bubble sort        |
+| maximum keresés | legnagyobb elem    |
+| minimum keresés | legkisebb elem     |
+| számlálás       | páros számok száma |
+| összegzés       | elemek összege     |
+Összegzés algoritmus
+int[] numbers = {1, 2, 3, 4};
+
+int sum = 0;
+
+for (int n : numbers) {
+    sum += n;
+System.out.println(sum);
+Maximum keresés
+int[] numbers = {5, 2, 9, 1};
+int max = numbers[0];
+for (int n : numbers) {
+    if (n > max) {
+        max = n;
+System.out.println(max);
+Lineáris keresés
+int[] numbers = {10, 20, 30};
+int target = 20;
+for (int n : numbers) {
+    if (n == target) {
+        System.out.println("Megtalálva");
+Bubble sort rendezés
+int[] arr = {5, 3, 8, 1};
+for (int i = 0; i < arr.length - 1; i++) {
+    for (int j = 0; j < arr.length - i - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+
+            int temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+Algoritmus részei
+| Elem     | Jelentés           |
+| -------- | ------------------ |
+| változó  | adat tárolása      |
+| ciklus   | ismétlés           |
+| feltétel | döntés             |
+| tömb     | több adat tárolása |
+Java-ban gyakori eszközök
+| Elem    | Használat       |
+| ------- | --------------- |
+| `for`   | ciklus          |
+| `if`    | feltétel        |
+| `while` | ismétlés        |
+| `array` | adatok          |
+| `List`  | dinamikus lista |
+Időbonyolultság
+Az algoritmus sebességét jelöli.
+| Jelölés  | Jelentés        |
+| -------- | --------------- |
+| O(1)     | konstans        |
+| O(n)     | lineáris        |
+| O(n²)    | lassabb         |
+| O(log n) | nagyon hatékony |
+for (int i = 0; i < n; i++) {
+
+116. Mi a persistence?
+A perzisztencia) azt jelenti, hogy az adatok tartósan tárolódnak, és a program leállása után is megmaradnak.
+Java-ban ezt általában adatbázissal valósítjuk meg.
+* objektum létrehozása Java-ban
+* mentés adatbázisba
+* később visszatölthető
+Gyakori technológiák:
+* JPA
+* Hibernate
+* Spring Data JPA
+Fontos annotációk:
+@Entity
+public class User {
+    @Id
+    private Long id;
+
+    private String name;
+@Entity
+@Table(name = "users")
+public class User {
+@Id
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+@GeneratedValue
+@Entity
+public class User {
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String name;
+Az ORM (Object Relational Mapping) az objektumokat adatbázis táblákhoz kapcsolja.
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+users
+----------------
+id | name
+1  | Anna
+2  | Béla
+
+Összefoglalás:
+Java: Objektumorientált programozási nyelv.
+* platformfüggetlen
+* OOP
+* JVM-en fut
+Primitív adattípusok
+byte
+short
+int
+long
+float
+double
+char
+boolean
+Referencia típusok
+String
+Array
+Object
+List
+OOP alapelvek
+| Fogalom       | Jelentés     |
+| ------------- | ------------ |
+| Encapsulation | adatrejtés   |
+| Inheritance   | öröklődés    |
+| Polymorphism  | többalakúság |
+| Abstraction   | absztrakció  |
+Osztály és objektum
+class User {
+    String name;
+User u = new User();
+Konstruktor
+public User() {
+Objektum létrehozásakor fut le.
+Getter / Setter
+getName()
+setName()
+Adatok elérése/módosítása.
+Annotáció
+Metaadat Java-ban.
+@Override
+@Entity
+@RestController
+Algoritmus: Lépések sorozata probléma megoldására.
+* keresés
+* rendezés
+* összegzés
+Collectionök
+| Típus | Jellemző         |
+| ----- | ---------------- |
+| List  | rendezett        |
+| Set   | nincs duplikáció |
+| Map   | kulcs-érték      |
+Exception kezelés
+try {
+}
+catch(Exception e) {
+}
+Hibakezelés.
+JDBC Java Database Connectivity.
+Java kapcsolat adatbázissal.
+1. kapcsolat
+2. SQL futtatás
+3. eredmény feldolgozás
+SQL
+CRUD
+| Művelet | SQL    |
+| ------- | ------ |
+| Create  | INSERT |
+| Read    | SELECT |
+| Update  | UPDATE |
+| Delete  | DELETE |
+SELECT * FROM users;
+INSERT INTO users(name)
+VALUES('Anna');
+UPDATE users
+SET name='Bela'
+WHERE id=1;
+DELETE FROM users
+WHERE id=1;
+JOIN Táblák összekapcsolása.
+INNER JOIN
+LEFT JOIN
+RIGHT JOIN
+Primary Key Egyedi azonosító.
+PRIMARY KEY
+Foreign Key
+Kapcsolat két tábla között.
+FOREIGN KEY
+Normalizálás Adatismétlés csökkentése.
+JSP Java alapú View technológia.
+${message}
+Spring MVC-ben használható.
+| Réteg      | Feladat      |
+| ---------- | ------------ |
+| Model      | adatok       |
+| View       | megjelenítés |
+| Controller | kéréskezelés |
+Spring Framework
+Java framework webalkalmazásokhoz.
+Spring Boot
+Spring gyors konfigurációval.
+Dependency:
+spring-boot-starter-web
+Spring Web
+REST API készítés.
+Annotációk:
+@RestController
+@GetMapping
+@PostMapping
+REST API
+HTTP alapú kommunikáció.
+| HTTP   | CRUD   |
+| ------ | ------ |
+| GET    | Read   |
+| POST   | Create |
+| PUT    | Update |
+| DELETE | Delete |
+Dependency Injection
+Spring automatikusan példányosít objektumokat.
+@Autowired
+Spring annotációk
+@Controller
+@RestController
+@Service
+@Repository
+@Component
+Persistence Adatok tartós tárolása.
+Technológiák:
+* Hibernate
+JPA Java Persistence API.
+Objektum ↔ adatbázis kezelés.
+Hibernate
+JPA implementáció.
+Automatikus SQL generálás.
+ORM Object Relational Mapping.
+Class ↔ Table
+Object ↔ Row
+Field ↔ Column
+@Entity
+Adatbázis táblát jelöl.
+@Id
+Elsődleges kulcs.
+@GeneratedValue
+Automatikus ID generálás.
+Repository
+Adatbázis műveletek.
+JpaRepository
+Rétegek Springben
+Controller
+↓
+Service
+↓
+Repository
+↓
+Database
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
